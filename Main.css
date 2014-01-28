@@ -46,7 +46,7 @@ border-radius: 4px 4px 0 0;
 
 div#login
 {
-	display:block;
+	alignment-adjust:;
 }
 
 
@@ -58,4 +58,10 @@ ul#nav li a:hover
 .warning
 {
 	color:red;
+}
+#login {
+	position: relative;
+	height: auto;
+	width: auto;
+	right: auto;
 }
