@@ -4,7 +4,7 @@ body
 {
 	font: "Trebuchet MS", Verdana, sans-serif;
 	background-color: #000066;
-	color: #FFFFFF;
+	color: #000000;
 }
 
 #main 
@@ -18,7 +18,7 @@ h1
 {
 	font: Georgia, serif;
 	border-bottom: 3px solid #FFFFFF;
-	color: #FFFFFF;
+	color: #000000;
 }
 
 ul#nav
@@ -30,7 +30,8 @@ margin: 0;
 
 ul#nav li
 {
-display: inline;
+	display: inline;
+	right: auto;
 }
 
 ul#nav li a 
@@ -43,7 +44,18 @@ color: #034af3;
 border-radius: 4px 4px 0 0;
 }
 
+div#login
+{
+	display:block;
+}
+
+
 ul#nav li a:hover
 {
 	background-color: #000000;
+}
+
+.warning
+{
+	color:red;
 }
