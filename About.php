@@ -10,6 +10,13 @@
 <?php include("header.php"); ?>
 <div id="main">
 <h1>About Us</h1>
+
+<ul>
+ <li><a href="">About Us</a></li>
+  <li><a href="">What is Hotel Reservation</a></li>
+   <li><a href="">Site Map</a></li>
+    <li><a href="">Contact Information</a></li>
+    </ul>
 <p></p>
 </div>
 </body>
