@@ -31,12 +31,16 @@ Username:
 </table>
 </form>
 </div>
+
 <ul id="nav">
+<!--<style>ul#nav li a:hover{
+	background-color:#dba204;
+	}
+</style>-->
 <li><a href="index.php">Home</a></li>
 <li><a href="reservations.php">Reservations</a></li>
 <li><a href="About.php">About</a></li>
 </ul>
-</div>
 </div>
 
 
