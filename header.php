@@ -38,7 +38,7 @@ Username:
 	}
 </style>-->
 <li><a href="index.php">Home</a></li>
-<li><a href="reservations.php">Reservations</a></li>
+<li><a href="reservations.php">My Reservation</a></li>
 <li><a href="About.php">About Us</a></li>
 </ul>
 </div>
