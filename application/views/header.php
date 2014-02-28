@@ -1,6 +1,6 @@
-<!Doctype HTML>
-
+<!Doctype HTML><head>
 <link rel="stylesheet" href="../Main.css" />
+</head>
 
 <div id="header">
 <div id="login" align="right">

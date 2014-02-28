@@ -67,6 +67,11 @@
 <body>
 
 <div id="container">
+	<?php if(CRYPT_BLOWFISH)
+		echo "CRYPT_BLOWFISH";
+	      if(CRYPT_SHA256)
+		echo "CRYPT_SHA256";
+		?>
 	<h1>Welcome to CodeIgniter!</h1>
 
 	<div id="body">

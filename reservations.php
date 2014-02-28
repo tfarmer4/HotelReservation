@@ -10,7 +10,7 @@
 <?php include("header.php"); ?>
 <!-- A div with id="main" is needed for the middle colored region -->
 <div id="main">
-<h1>My Reservation</h1>
+<h1>Reservations</h1>
 <!--forms for reservations will go here -->
 
 </div>

@@ -35,7 +35,8 @@ define('FOPEN_WRITE_CREATE',					'ab');
 define('FOPEN_READ_WRITE_CREATE',				'a+b');
 define('FOPEN_WRITE_CREATE_STRICT',				'xb');
 define('FOPEN_READ_WRITE_CREATE_STRICT',		'x+b');
-
+define('HASH_ITER', 1000);
+define('SALT', 			'eb5a6ad');
 
 /* End of file constants.php */
 /* Location: ./application/config/constants.php */
