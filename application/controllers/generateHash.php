@@ -17,7 +17,7 @@ class GenerateHash
 		$hash = hash("sha256", $password . $salt) or die('ERROR: Could not create hash');
 		for($i = 0; $i < HASH_ITER; $i++)
 			$hash = hash("whirlpool", $hash . $i);
-		var_dump($salt);
+
 		return array('hash' => $hash, 'salt' => $salt);
 	}
 	

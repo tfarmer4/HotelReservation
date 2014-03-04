@@ -19,17 +19,21 @@ class Login extends CI_Controller
 		$this->db->from('Users');
 		$this->db->where('uName', $u_name);
 		$query = $this->db->get();
-		//var_dump($row = $query->row());
+		
 		if($query->num_rows() == 1)
 		{
-			echo "we made it here";
+
 			$row = $query->row();
 			$generator = new GenerateHash($pw, $row->salt);
 			$hash = $generator->hash($pw, $row->salt);
 			
 			if($row->hash == $hash['hash']){
-				echo "LOGIN SUCCESS!";
+				$this->load->view('login_successful');
 				
+			}
+			else
+			{
+				$this->load->view('login_form');
 			}
 		}	
 	} 

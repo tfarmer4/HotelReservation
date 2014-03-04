@@ -13,6 +13,7 @@ class Register extends CI_Controller
                 $this->load->library('phpass');
                 $this->load->model('db_model');
                 $this->load->helper('form');
+		$this->load->library('table');
                 $this->load->helper('security');
                 $this->load->view('register_form');
 	}
@@ -33,11 +34,7 @@ class Register extends CI_Controller
 			$userSalt = substr(uniqid(null,true), 15);
 			$generator = new GenerateHash($password, $userSalt);
 			$hash = $generator->hash($password, $userSalt); 
-			
-
-			$sql = 'DELETE FROM `Users` 
-				WHERE uName = ' . $this->db->escape($uName);
-			
+			$sql = "DELETE FROM `Users` WHERE uName='" . $uName . "'";
 			$this->db->query($sql);	
 			$sql = 
 				'INSERT INTO `Users` (`uName`, `pass`, `address1`, `address2`, `city`, `stateCode`, `phone`, `fName`, `lName`, `salt`) 
@@ -51,11 +48,17 @@ class Register extends CI_Controller
 						$this->db->escape($fName).', ' .
 						$this->db->escape($lName).', ' .
 						$this->db->escape($userSalt). ')';
-			$this->db->query($sql);
-					
+			if($this->db->query($sql))
+			{
+				$this->load->view('registration_successful');	
+			}
+			else
+			{
+				$this->load->view('registeration_unsuccessful');
+			}
 		}
+	
         }
-
 }
 ?>
 
