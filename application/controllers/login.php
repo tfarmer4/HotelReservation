@@ -28,14 +28,17 @@ class Login extends CI_Controller
 			$hash = $generator->hash($pw, $row->salt);
 			
 			if($row->hash == $hash['hash']){
-				$this->load->view('login_successful');
+				echo 'LOGIN SUCCESSFUL!';
 				
 			}
 			else
 			{
-				$this->load->view('login_form');
+				redirect('login', 'location');	
 			}
-		}	
+		}
+		else
+			redirect('login','location');	
+
 	} 
 	
 }

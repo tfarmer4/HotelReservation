@@ -31,7 +31,8 @@ class Register extends CI_Controller
                         $phone = $this->input->post('phone', TRUE);
                         $fName = $this->input->post('fName', TRUE);
                         $lName = $this->input->post('lName', TRUE);
-			$userSalt = substr(uniqid(null,true), 15);
+			$userSalt = bin2hex(openssl_random_pseudo_bytes(32));
+			var_dump($userSalt);
 			$generator = new GenerateHash($password, $userSalt);
 			$hash = $generator->hash($password, $userSalt); 
 			$sql = "DELETE FROM `Users` WHERE uName='" . $uName . "'";
@@ -48,13 +49,14 @@ class Register extends CI_Controller
 						$this->db->escape($fName).', ' .
 						$this->db->escape($lName).', ' .
 						$this->db->escape($userSalt). ')';
+			
 			if($this->db->query($sql))
 			{
-				$this->load->view('registration_successful');	
+				echo 'Registration Successful!';	
 			}
 			else
 			{
-				$this->load->view('registeration_unsuccessful');
+				redirect('../index.php/register');
 			}
 		}
 	
