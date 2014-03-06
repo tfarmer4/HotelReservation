@@ -76,7 +76,7 @@ CREATE TABLE IF NOT EXISTS `tlf0096`.`Users` (
   `phone` CHAR(10) NULL,
   `fName` CHAR(20) NOT NULL,
   `lName` CHAR(20) NOT NULL,
-  `salt` CHAR(64) NOT NULL UNIQUE,
+  `salt` CHAR(64) NOT NULL,
   PRIMARY KEY (`userID`))
 ENGINE = InnoDB;
 

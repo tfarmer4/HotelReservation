@@ -32,14 +32,16 @@ class Register extends CI_Controller
                         $fName = $this->input->post('fName', TRUE);
                         $lName = $this->input->post('lName', TRUE);
 			$userSalt = bin2hex(openssl_random_pseudo_bytes(32));
-			var_dump($userSalt);
+			
 			$generator = new GenerateHash($password, $userSalt);
 			$hash = $generator->hash($password, $userSalt); 
-			$sql = "DELETE FROM `Users` WHERE uName='" . $uName . "'";
-			$this->db->query($sql);	
-			$sql = 
-				'INSERT INTO `Users` (`uName`, `pass`, `address1`, `address2`, `city`, `stateCode`, `phone`, `fName`, `lName`, `salt`) 
-        			VALUES ('.    $this->db->escape($uName).', '.
+			if($uName == 'Dev')
+			{
+				$sql = "DELETE FROM `Users` WHERE uName='Dev'";
+				$this->db->query($sql);
+			}
+			$sql = 	'INSERT INTO `Users` (`uName`, `pass`, `address1`, `address2`, `city`, `stateCode`, `phone`, `fName`, `lName`, `salt`) 
+        			 VALUES ('.    $this->db->escape($uName).', '.
 					       $this->db->escape($hash['hash']).',	' . 
 					 	$this->db->escape($add1).', ' . 
 						$this->db->escape($add2).', ' .
@@ -52,11 +54,11 @@ class Register extends CI_Controller
 			
 			if($this->db->query($sql))
 			{
-				echo 'Registration Successful!';	
+				redirect('login');
 			}
 			else
 			{
-				redirect('../index.php/register');
+				echo 'Registration Unsuccessful';
 			}
 		}
 	
