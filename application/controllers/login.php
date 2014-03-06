@@ -9,10 +9,13 @@ class Login extends CI_Controller
 		$this->load->helper('form');
 		$this->load->helper('security');
 		$this->load->view('login_form');
-	}
+		
+        }
 
 	function doLogin()
 	{
+
+
 		$u_name = $this->input->post('username', TRUE) ? $this->input->post('username', TRUE) : '';
 		$pw = $this->input->post('password', TRUE) ? $this->input->post('password', TRUE) : '';
 		$this->db->select('uName,pass AS hash, salt');
@@ -30,8 +33,8 @@ class Login extends CI_Controller
 			if($row->hash == $hash['hash']){
 				echo 'LOGIN SUCCESSFUL!';
 				$sessionData = array('uName'=>$u_name,'loggedIn'=>'TRUE');
-				$this->session->set_userdata($sessionData);			
-				var_dump($this->session->all_userdata());
+				$this->session->set_userdata($sessionData);
+				$this->session->unset_userdata('registerSuccess');			
 			}
 
 			else

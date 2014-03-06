@@ -8,6 +8,10 @@
 
 <body>
 <div id="main">
+<?php if($this->session->userdata('registerSuccess') == 1)
+	{
+		echo 'Registration Successful!';
+	}?>
 <!-- TODO: Add client side input validation -->
 <table border="0">
 <?php 

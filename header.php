@@ -4,20 +4,20 @@
 
 <div id="header">
 <div id="login" align="right">
-
-<form method="post" action="login.php">
+<?php if(!$this->session->userdata('uName') && $this->session->userdata('loggedIn')!='TRUE') :?>
+<form method="post" action="login/dologin">
 <table>
 <tr>
 <td>
 Username:
 </td>
 <td>
-<input type="text" name="u_name" required/></p>
+<input type="text" name="username" required/></p>
 </td>
 <tr>
 <td>Password:</td>
 <td>
-<input type="password" name="p_word" required/></p>
+<input type="password" name="password" required/></p>
 </td>
 </tr>
 <tr>
@@ -30,6 +30,7 @@ Username:
 </tr>
 </table>
 </form>
+<?php else: echo $this->session->userdata('uName'); endif;?>
 </div>
 
 <ul id="nav">
@@ -42,6 +43,3 @@ Username:
 <li><a href="about">About Us</a></li>
 </ul>
 </div>
-
-
-
