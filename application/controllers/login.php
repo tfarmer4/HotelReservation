@@ -3,7 +3,7 @@ require_once('generateHash.php');
 class Login extends CI_Controller
 {
 	function index(){
-		
+		$this->load->library('session');
 		$this->load->library('phpass');
 		$this->load->model('db_model');
 		$this->load->helper('form');
@@ -28,14 +28,20 @@ class Login extends CI_Controller
 			$hash = $generator->hash($pw, $row->salt);
 			
 			if($row->hash == $hash['hash']){
-				$this->load->view('login_successful');
-				
+				echo 'LOGIN SUCCESSFUL!';
+				$sessionData = array('uName'=>$u_name,'loggedIn'=>'TRUE');
+				$this->session->set_userdata($sessionData);			
+				var_dump($this->session->all_userdata());
 			}
+
 			else
 			{
-				$this->load->view('login_form');
+				echo 'LOGIN UNSUCCESSFUL!';
 			}
-		}	
+		}
+		else
+			echo 'LOGIN UNSUCCESSFUL!';
+
 	} 
 	
 }

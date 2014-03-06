@@ -1,13 +1,22 @@
 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
--- myDB is your database name
-USE `myDB` ;
+
+USE `tlf0096` ;
+
+drop table if exists `Users`;
+drop table if exists `Guests`;
+drop table if exists `Hotels`;
+drop table if exists `Rooms`;
+drop table if exists `RoomTypes`;
+drop table if exists `Reservations`;
+drop table if exists `Room_Reservation`;
+drop table if exists `Location`;
 
 -- -----------------------------------------------------
--- Table `myDB`.`Location`
+-- Table `tlf0096`.`Location`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `myDB`.`Location` (
+CREATE TABLE IF NOT EXISTS `tlf0096`.`Location` (
   `locationID` INT NOT NULL AUTO_INCREMENT,
   `address` VARCHAR(255) NOT NULL,
   `city` VARCHAR(45) NOT NULL,
@@ -18,9 +27,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `myDB`.`Hotels`
+-- Table `tlf0096`.`Hotels`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `myDB`.`Hotels` (
+CREATE TABLE IF NOT EXISTS `tlf0096`.`Hotels` (
   `hotelID` INT NOT NULL AUTO_INCREMENT,
   `FK_locationID` INT NOT NULL,
   `hotelName` VARCHAR(20) NOT NULL,
@@ -29,16 +38,16 @@ CREATE TABLE IF NOT EXISTS `myDB`.`Hotels` (
   INDEX `locationID_idx` (`FK_locationID` ASC),
   CONSTRAINT `locationID`
     FOREIGN KEY (`FK_locationID`)
-    REFERENCES `myDB`.`Location` (`locationID`)
+    REFERENCES `tlf0096`.`Location` (`locationID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `myDB`.`Guests`
+-- Table `tlf0096`.`Guests`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `myDB`.`Guests` (
+CREATE TABLE IF NOT EXISTS `tlf0096`.`Guests` (
   `guestID` INT NOT NULL AUTO_INCREMENT,
   `fName` CHAR(20) NOT NULL,
   `lName` CHAR(20) NOT NULL,
@@ -53,12 +62,13 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `myDB`.`Users`
+-- Table `tlf0096`.`Users`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `myDB`.`Users` (
+
+CREATE TABLE IF NOT EXISTS `tlf0096`.`Users` (
   `userID` INT NOT NULL AUTO_INCREMENT,
-  `uName` CHAR(60) NOT NULL UNIQUE,
-  `pass` CHAR(60) NOT NULL,
+  `uName` CHAR(64) NOT NULL UNIQUE,
+  `pass` CHAR(255) NOT NULL,
   `address1` CHAR(100) NOT NULL,
   `address2` CHAR(100) NULL,
   `city` CHAR(20) NOT NULL,
@@ -66,14 +76,15 @@ CREATE TABLE IF NOT EXISTS `myDB`.`Users` (
   `phone` CHAR(10) NULL,
   `fName` CHAR(20) NOT NULL,
   `lName` CHAR(20) NOT NULL,
+  `salt` CHAR(64) NOT NULL,
   PRIMARY KEY (`userID`))
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `myDB`.`Reservations`
+-- Table `tlf0096`.`Reservations`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `myDB`.`Reservations` (
+CREATE TABLE IF NOT EXISTS `tlf0096`.`Reservations` (
   `reservationID` INT NOT NULL AUTO_INCREMENT,
   `FK_guestID` INT NULL,
   `FK_userID` INT NULL,
@@ -85,21 +96,21 @@ CREATE TABLE IF NOT EXISTS `myDB`.`Reservations` (
   INDEX `userID_idx` (`FK_userID` ASC),
   CONSTRAINT `guestID`
     FOREIGN KEY (`FK_guestID`)
-    REFERENCES `myDB`.`Guests` (`guestID`)
+    REFERENCES `tlf0096`.`Guests` (`guestID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `userID`
     FOREIGN KEY (`FK_userID`)
-    REFERENCES `myDB`.`Users` (`userID`)
+    REFERENCES `tlf0096`.`Users` (`userID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `myDB`.`RoomTypes`
+-- Table `tlf0096`.`RoomTypes`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `myDB`.`RoomTypes` (
+CREATE TABLE IF NOT EXISTS `tlf0096`.`RoomTypes` (
   `roomTypeID` INT NOT NULL AUTO_INCREMENT,
   `roomPrice` DECIMAL(10,2) NOT NULL,
   `roomDesc` VARCHAR(255) NULL DEFAULT NULL,
@@ -110,9 +121,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `myDB`.`Rooms`
+-- Table `tlf0096`.`Rooms`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `myDB`.`Rooms` (
+CREATE TABLE IF NOT EXISTS `tlf0096`.`Rooms` (
   `roomID` INT NOT NULL AUTO_INCREMENT,
   `FK_roomTypeID` INT NOT NULL,
   `FK_hotelID` INT NOT NULL,
@@ -122,21 +133,21 @@ CREATE TABLE IF NOT EXISTS `myDB`.`Rooms` (
   INDEX `roomTypeID_idx` (`FK_roomTypeID` ASC),
   CONSTRAINT `roomTypeID`
     FOREIGN KEY (`FK_roomTypeID`)
-    REFERENCES `myDB`.`RoomTypes` (`roomTypeID`)
+    REFERENCES `tlf0096`.`RoomTypes` (`roomTypeID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `hotelID`
     FOREIGN KEY (`FK_hotelID`)
-    REFERENCES `myDB`.`Hotels` (`hotelID`)
+    REFERENCES `tlf0096`.`Hotels` (`hotelID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `myDB`.`Room_Reservation`
+-- Table `tlf0096`.`Room_Reservation`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `myDB`.`Room_Reservation` (
+CREATE TABLE IF NOT EXISTS `tlf0096`.`Room_Reservation` (
   `FK_roomID` INT NOT NULL,
   `FK_reservationID` INT NOT NULL,
   INDEX `reservationID_idx` (`FK_reservationID` ASC),
@@ -144,12 +155,12 @@ CREATE TABLE IF NOT EXISTS `myDB`.`Room_Reservation` (
   PRIMARY KEY (`FK_reservationID`, `FK_roomID`),
   CONSTRAINT `roomId`
     FOREIGN KEY (`FK_roomID`)
-    REFERENCES `myDB`.`Rooms` (`roomID`)
+    REFERENCES `tlf0096`.`Rooms` (`roomID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `reservationID`
     FOREIGN KEY (`FK_reservationID`)
-    REFERENCES `myDB`.`Reservations` (`reservationID`)
+    REFERENCES `tlf0096`.`Reservations` (`reservationID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
