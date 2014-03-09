@@ -54,6 +54,7 @@ class Register extends CI_Controller
 			
 			if($this->db->query($sql))
 			{
+				$this->session->set_userdata('registerSuccess','1');
 				redirect('login');
 			}
 			else
