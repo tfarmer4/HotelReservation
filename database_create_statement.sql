@@ -56,7 +56,8 @@ CREATE TABLE IF NOT EXISTS `tlf0096`.`Guests` (
   `city` CHAR(20) NOT NULL,
   `stateCode` CHAR(2) NOT NULL,
   `postCode` CHAR(20) NOT NULL,
-  `phone` CHAR(10) NULL DEFAULT NULL,
+  `phone` CHAR(10) DEFAULT NULL,
+  `email` CHAR(50) NOT NULL UNIQUE,
   PRIMARY KEY (`guestID`))
 ENGINE = InnoDB;
 
@@ -77,6 +78,7 @@ CREATE TABLE IF NOT EXISTS `tlf0096`.`Users` (
   `fName` CHAR(20) NOT NULL,
   `lName` CHAR(20) NOT NULL,
   `salt` CHAR(64) NOT NULL,
+  `email` CHAR(50) NOT NULL UNIQUE,
   PRIMARY KEY (`userID`))
 ENGINE = InnoDB;
 
