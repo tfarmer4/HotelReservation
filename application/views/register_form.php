@@ -24,8 +24,6 @@
         echo '</td><td>';
 	echo form_input($data);
 	echo '</td></tr>';
-  
-
 
 	$data = array('id'=>'lName', 'maxlength'=>'20', 'name'=>'lName', "required" => "required");
         echo '<tr><td>';
@@ -34,6 +32,12 @@
         echo form_input($data);
 	echo '</td></tr>';
 
+	$data = array('id'=>'email', 'maxlength'=>'100', 'name'=>'email', 'required'=>'required');
+	echo '<tr><td>';
+	echo 'Email: ';
+	echo '</td><td>';
+	echo form_input($data);
+	echo '</td></tr>';
 
 
 	$data = array('id'=>'uName', 'maxlength'=>'16', 'name'=>'username', "required" => "required");
