@@ -4,7 +4,7 @@
 
 <div id="header">
 <div id="login" align="right">
-<?php if(!$this->session->userdata('uName') && $this->session->userdata('loggedIn')!='TRUE' && $this->session->userdata('error')!='error_login'):?>
+<?php if(!$this->session->userdata('uName') && $this->session->userdata('loggedIn')!='TRUE' && $this->session->userdata('error')!='error_login' && $_SERVER['PATH_INFO'] != '/login'):?>
     <form method="post" action="index.php/login/dologin"  id="head_login">
 <table>
 <tr>
