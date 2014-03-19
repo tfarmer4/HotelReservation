@@ -12,13 +12,16 @@
  * @author Tim
  */
 class Home extends CI_Controller {
-    function __construct() 
+
+    function __construct()
     {
         parent::__construct();
     }
-    
+
     function index()
     {
+        $this->load->view('header');
         $this->load->view('home_view');
     }
+
 }

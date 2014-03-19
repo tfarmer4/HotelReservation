@@ -8,17 +8,20 @@
 
 /**
  * Description of about
- *
+ * This is the about us controller
  * @author Tim
  */
 class About extends CI_Controller {
-    function __construct() 
+
+    function __construct()
     {
         parent::__construct();
     }
-    
+
     function index()
     {
+        $this->load->view('header');
         $this->load->view('about_view');
     }
+
 }

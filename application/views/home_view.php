@@ -5,7 +5,6 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Hotel Reservation System</title>
 <link href="Main.css" rel="stylesheet"/>
-<?php require_once('header.php')?>
 </head>
 <body>
 

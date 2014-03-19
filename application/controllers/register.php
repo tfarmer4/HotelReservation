@@ -1,78 +1,85 @@
 <?php
+
 require_once('generateHash.php');
 
-class Register extends CI_Controller
-{
-	function __construct()
-	{
-		parent::__construct();
-	}
+class Register extends CI_Controller {
 
-        function index()
+    function __construct()
+    {
+        parent::__construct();
+    }
+
+    function index()
+    {
+        $this->load->model('db_model');
+        $this->load->helper('form');
+        $this->load->library('table');
+        $this->load->helper('security');
+        $this->load->view('header');
+        $this->load->view('register_form');
+    }
+
+    function doHash()
+    {
+        $password = $this->input->post('password', TRUE);
+        if ($password)
         {
-                $this->load->library('phpass');
-                $this->load->model('db_model');
-                $this->load->helper('form');
-		$this->load->library('table');
-                $this->load->helper('security');
-                $this->load->view('register_form');
-	}
 
-        function doHash()
-        {
-                $password = $this->input->post('password', TRUE);
-                if ( $password ) {
-					
-			$uName = $this->input->post('username', TRUE);
-                        $add1 = $this->input->post('address1', TRUE);
-                        $add2 = $this->input->post('address2', TRUE);
-                        $city = $this->input->post('city', TRUE);
-                        $stateCode = $this->input->post('stateCode', TRUE);
-                        $phone = $this->input->post('phone', TRUE);
-                        $fName = $this->input->post('fName', TRUE);
-                        $lName = $this->input->post('lName', TRUE);
-			$userSalt = bin2hex(openssl_random_pseudo_bytes(32));
-			$email = $this->input->post('email', 'TRUE');
-			$generator = new GenerateHash($password, $userSalt);
-			$hash = $generator->hash($password, $userSalt); 
-			if($uName == 'Dev')
-			{
-				$sql = "DELETE FROM `Users` WHERE uName='Dev'";
-				$this->db->query($sql);
-			}
+            $uName = $this->input->post('username', TRUE);
+            $add1 = $this->input->post('address1', TRUE);
+            $add2 = $this->input->post('address2', TRUE);
+            $city = $this->input->post('city', TRUE);
+            $stateCode = $this->input->post('stateCode', TRUE);
+            $phone = $this->input->post('phone', TRUE);
+            $fName = $this->input->post('fName', TRUE);
+            $lName = $this->input->post('lName', TRUE);
+            $userSalt = bin2hex(openssl_random_pseudo_bytes(32));
+            $email = $this->input->post('email', 'TRUE');
+            $generator = new GenerateHash($password, $userSalt);
+            $hash = $generator->hash($password, $userSalt);
+            if ($uName == 'Dev')
+            {
+                $sql = "DELETE FROM `Users` WHERE uName='Dev'";
+                $this->db->query($sql);
+                $this->session->userdata('error', 1);
+            }
 
-			$sql = $this->db->get_where('Users',  array('uName'=>$uName));
-			if($this->db->query($sql))
-			{
-				$this->session->set_userdata('error', 'error_uName');
-				redirect('register');
-			}
-			$sql = 	'INSERT INTO `Users` (`uName`, `pass`, `address1`, `address2`, `city`, `stateCode`, `phone`, `fName`, `lName`, `salt`, `email`) 
-        			 VALUES ('.    $this->db->escape($uName).', '.
-					       $this->db->escape($hash['hash']).',	' . 
-					 	$this->db->escape($add1).', ' . 
-						$this->db->escape($add2).', ' .
-						$this->db->escape($city).', ' .
-						$this->db->escape($stateCode).', ' .
-						$this->db->escape($phone).', ' . 
-						$this->db->escape($fName).', ' .
-						$this->db->escape($lName).', ' .
-						$this->db->escape($userSalt). ', '.
-						$this->db->escape($email) . ')';
-			
-			if($this->db->query($sql))
-			{
-				$this->session->set_userdata('error','1');
-				redirect('login');
-			}
-			else
-			{
-				$this->session->set_userdata('error', 'error_registration');
-				redirect('register');
-			}
-		}
-	
+            
+            else
+            {
+                $sql = $this->db->get_where('Users', array('uName' => $uName));
+                if($this->db->query($sql))
+                {
+                    $this->session->set_userdata('error', 'error_uName');
+                    redirect('register');
+                }
+            }
+            $sql = 'INSERT INTO `Users` (`uName`, `pass`, `address1`, `address2`, `city`, `stateCode`, `phone`, `fName`, `lName`, `salt`, `email`) 
+        			 VALUES (' . $this->db->escape($uName) . ', ' .
+                    $this->db->escape($hash['hash']) . ',	' .
+                    $this->db->escape($add1) . ', ' .
+                    $this->db->escape($add2) . ', ' .
+                    $this->db->escape($city) . ', ' .
+                    $this->db->escape($stateCode) . ', ' .
+                    $this->db->escape($phone) . ', ' .
+                    $this->db->escape($fName) . ', ' .
+                    $this->db->escape($lName) . ', ' .
+                    $this->db->escape($userSalt) . ', ' .
+                    $this->db->escape($email) . ')';
+
+            if ($this->db->query($sql))
+            {
+                $this->session->set_userdata('error', '1');
+                redirect('login');
+            }
+            else
+            {
+                $this->session->set_userdata('error', 'error_registration');
+                redirect('register');
+            }
         }
+    }
+
 }
 ?>
 
