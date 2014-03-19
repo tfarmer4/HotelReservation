@@ -9,6 +9,7 @@
 <body>
 
 <div id="main">
+
 <table border="0">
 <?	
 
@@ -45,8 +46,10 @@
 	echo 'Username: ';
 	echo '</td><td>';
 	echo form_input($data);
-	echo '</td></tr>';
-
+	echo '</td>';
+	if($this->session->userdata('error') == 'error_uName')
+		echo '<td class="error">* Username already registered</td>';
+	echo '</tr>';
 	
 	$data = array('id'=>'pass', 'maxlength'=>'16', 'name'=>'password', "required" => "required");
 	echo '<tr><td>';

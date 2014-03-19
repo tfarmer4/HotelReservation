@@ -31,20 +31,24 @@ class Login extends CI_Controller
 			$hash = $generator->hash($pw, $row->salt);
 			
 			if($row->hash == $hash['hash']){
-				echo 'LOGIN SUCCESSFUL!';
 				$sessionData = array('uName'=>$u_name,'loggedIn'=>'TRUE');
+				$this->session->unset('loginSuccess');
 				$this->session->set_userdata($sessionData);
-				$this->session->unset_userdata('registerSuccess');			
+				$this->session->unset_userdata('registerSuccess');
+				redirect('home');			
 			}
 
 			else
 			{
-				echo 'LOGIN UNSUCCESSFUL!';
+				$this->session->set_userdata(array('error'=>'error_login', 'loggedIn'=>'FALSE'));
+				redirect('login');	
 			}
 		}
 		else
-			echo 'LOGIN UNSUCCESSFUL!';
-
+		{
+			$this->session->set_userdata(array('error'=>'error_login', 'loggedIn'=>'FALSE'));
+			redirect('login');
+		}
 	} 
 	
 }
