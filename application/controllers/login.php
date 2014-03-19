@@ -1,4 +1,4 @@
-<?php 
+<?php
 require_once('generateHash.php');
 class Login extends CI_Controller
 {
@@ -8,7 +8,8 @@ class Login extends CI_Controller
 		$this->load->model('db_model');
 		$this->load->helper('form');
 		$this->load->helper('security');
-		$this->load->view('login_form');
+                                          $this->load->view('header');
+                                          $this->load->view('login_form');
 		
         }
 
@@ -32,9 +33,9 @@ class Login extends CI_Controller
 			
 			if($row->hash == $hash['hash']){
 				$sessionData = array('uName'=>$u_name,'loggedIn'=>'TRUE');
-				$this->session->unset('loginSuccess');
+				$this->session->unset_userdata('loginSuccess');
 				$this->session->set_userdata($sessionData);
-				$this->session->unset_userdata('registerSuccess');
+				$this->session->unset_userdata('error');
 				redirect('home');			
 			}
 
@@ -52,4 +53,3 @@ class Login extends CI_Controller
 	} 
 	
 }
-?>

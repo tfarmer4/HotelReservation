@@ -1,23 +1,23 @@
-<!Doctype HTML><head>
+<!Doctype HTML>
+
 <link rel="stylesheet" href="../Main.css" />
-</head>
 
 <div id="header">
 <div id="login" align="right">
-
-<form method="post" action="login.php">
+<?php if(!$this->session->userdata('uName') && $this->session->userdata('loggedIn')!='TRUE' && $this->session->userdata('error')!='error_login'):?>
+    <form method="post" action="index.php/login/dologin"  id="head_login">
 <table>
 <tr>
 <td>
 Username:
 </td>
 <td>
-<input type="text" name="u_name" required/></p>
+<input type="text"  name="username" required/></p>
 </td>
 <tr>
 <td>Password:</td>
 <td>
-<input type="password" name="p_word" required/></p>
+<input type="password" name="password" required/></p>
 </td>
 </tr>
 <tr>
@@ -25,11 +25,12 @@ Username:
 <input type="submit" name="b_login" value="Login"/>
 </td>
 <td>
-<input type="button" value="Register New User" onclick="location.href='register.php';" name="btn_register"/>
+<input type="button" value="Register New User" onclick="location.href='register';" name="btn_register"/>
 </td>
 </tr>
 </table>
 </form>
+<?php else: echo $this->session->userdata('uName'); endif;?>
 </div>
 
 <ul id="nav">
@@ -37,11 +38,8 @@ Username:
 	background-color:#dba204;
 	}
 </style>-->
-<li><a href="index.php">Home</a></li>
-<li><a href="reservations.php">My Reservation</a></li>
-<li><a href="About.php">About Us</a></li>
+<li><a href="home">Home</a></li>
+<li><a href="reservations">My Reservation</a></li>
+<li><a href="about">About Us</a></li>
 </ul>
 </div>
-
-
-
