@@ -17,6 +17,24 @@
                 echo '<tr><td>';
                 echo form_button($data);
                 echo '</td></tr>';
+                
+		$data = array('id' => 'uName', 'maxlength' => '16', 'name' => 'username', "required" => "required");
+                echo '<tr><td>';
+                echo 'Username: ';
+                echo '</td><td>';
+                echo form_input($data);
+                echo '</td>';
+                if ($this->session->userdata('error') == 'error_uName')
+                    echo '<td class="error">* Username already registered</td>';
+                echo '</tr>';
+				
+		$data = array('id' => 'pass', 'maxlength' => '16', 'name' => 'password', "required" => "required");
+                echo '<tr><td>';
+                echo 'Password: ';
+                echo '</td><td>';
+                echo form_password($data);
+                echo '</td></tr>';
+
                 $data = array('id' => 'fName', 'maxlength' => '20', 'name' => 'fName', "required" => "required");
                 echo '<tr><td>';
                 echo 'First Name: ';
@@ -31,39 +49,12 @@
                 echo form_input($data);
                 echo '</td></tr>';
 
-                $data = array('id' => 'email', 'maxlength' => '100', 'name' => 'email', 'required' => 'required');
-                echo '<tr><td>';
-                echo 'Email: ';
-                echo '</td><td>';
-                echo form_input($data);
-                echo '</td></tr>';
-
-
-                $data = array('id' => 'uName', 'maxlength' => '16', 'name' => 'username', "required" => "required");
-                echo '<tr><td>';
-                echo 'Username: ';
-                echo '</td><td>';
-                echo form_input($data);
-                echo '</td>';
-                if ($this->session->userdata('error') == 'error_uName')
-                    echo '<td class="error">* Username already registered</td>';
-                echo '</tr>';
-
-                $data = array('id' => 'pass', 'maxlength' => '16', 'name' => 'password', "required" => "required");
-                echo '<tr><td>';
-                echo 'Password: ';
-                echo '</td><td>';
-                echo form_password($data);
-                echo '</td></tr>';
-
-
                 $data = array('id' => 'add1', 'maxlength' => '100', 'name' => 'address1', "required" => "required");
                 echo '<tr><td>';
                 echo 'Address1: ';
                 echo '</td><td>';
                 echo form_input($data);
                 echo '</td></tr>';
-
 
                 $data = array('id' => 'add2', 'maxlength' => '100', 'name' => 'address2');
                 echo '<tr><td>';
@@ -80,7 +71,6 @@
                 echo form_input($data);
                 echo '</td></tr>';
 
-
                 $data = array('id' => 'stateCode', 'maxlength' => '2', 'name' => 'stateCode', "required" => "required");
                 echo '<tr><td>';
                 echo 'State: ';
@@ -88,15 +78,24 @@
                 echo form_input($data);
                 echo '</td></tr>';
 
-
                 $data = array('id' => 'phone', 'maxlength' => '10', 'name' => 'phone', "required" => "required");
                 echo '<tr><td>';
                 echo 'Phone: ';
                 echo '</td><td>';
                 echo form_input($data);
-                echo '</td></tr></table>';
+                echo '</td></tr>';
 
-
+                
+		$data = array('id' => 'email', 'maxlength' => '100', 'name' => 'email', 'required' => 'required');
+                echo '<tr><td>';
+                echo 'Email: ';
+                echo '</td><td>';
+                echo form_input($data);
+                echo '</td></tr>';
+		if($this->session->userdata('error') == 'error_email')
+			echo '<td class="error">Email is registered to another account</td>';
+		echo '</tr></table>';
+		
                 echo form_submit('registerSubmit', 'Register');
 
                 $data = array('id' => 'btn_reset', 'name' => 'btn_reset', 'value' => 'Reset Form', "required" => "required");
@@ -116,6 +115,7 @@
                 document.getElementById("phone").value = "18005555555";
                 document.getElementById("fName").value = "Development";
                 document.getElementById("lName").value = "Mastery";
+		document.getElementById("email").value = "noreply@noreply.com";
             }
         </script>
 

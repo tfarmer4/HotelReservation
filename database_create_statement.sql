@@ -79,6 +79,7 @@ CREATE TABLE IF NOT EXISTS `tlf0096`.`Users` (
   `lName` CHAR(20) NOT NULL,
   `salt` CHAR(64) NOT NULL,
   `email` CHAR(50) NOT NULL UNIQUE,
+  `isAdmin` BOOLEAN DEFAULT 0,
   PRIMARY KEY (`userID`))
 ENGINE = InnoDB;
 
