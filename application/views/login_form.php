@@ -1,9 +1,22 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<?php require_once('header.php'); ?>
+
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Untitled Document</title>
+<title>Login</title>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<?php if($this->session->userdata('error')=='error_login'):?>
+<script>
+$(document).ready(function()
+    {
+        $("#head_login").hide();
+    });
+</script>
+
+
+<?php endif;?>
+
+
 </head>
 
 <body>
@@ -15,7 +28,12 @@
 <!-- TODO: Add client side input validation -->
 <table border="0">
 <?php 
-	echo form_open('login/doLogin');
+                     if($this->session->userdata('error')=='error_login')
+                     {
+                         echo '<td class="error">* Wrong username or password.</td></tr>';
+                         $this->session->unset_userdata('error');
+                     }
+                     echo form_open('login/doLogin');
 	$data = array('id'=>'uname', 'maxlength'=>'16', 'name'=>'username', "required" => "required");
 	echo '<tr><td>';
 	echo 'Username: ';
