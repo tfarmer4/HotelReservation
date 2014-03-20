@@ -47,14 +47,23 @@ class Register extends CI_Controller {
             
             else
             {
-                $sql = $this->db->get_where('Users', array('uName' => $uName));
-                if($this->db->query($sql))
+                
+		$sql = $this->db->get_where('Users', array('uName' => $uName));
+                
+		if($this->db->query($sql)->num_rows() > 0)
                 {
                     $this->session->set_userdata('error', 'error_uName');
                     redirect('register');
                 }
+		$sql = $this->db->get_where('Users', array('email' => $email));
+		if($this->db->query($sql)->num_rows() > 0)
+		{
+		    $this->session->set_userdata('error', 'error_email');
+		    redirect('register');
+		}
             }
-            $sql = 'INSERT INTO `Users` (`uName`, `pass`, `address1`, `address2`, `city`, `stateCode`, `phone`, `fName`, `lName`, `salt`, `email`) 
+            
+		    $sql = 'INSERT INTO `Users` (`uName`, `pass`, `address1`, `address2`, `city`, `stateCode`, `phone`, `fName`, `lName`, `salt`, `email`) 
         			 VALUES (' . $this->db->escape($uName) . ', ' .
                     $this->db->escape($hash['hash']) . ',	' .
                     $this->db->escape($add1) . ', ' .
