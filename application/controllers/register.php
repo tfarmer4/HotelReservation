@@ -42,27 +42,46 @@ class Register extends CI_Controller {
                 $sql = "DELETE FROM `Users` WHERE uName='Dev'";
                 $this->db->query($sql);
                 $this->session->userdata('error', 1);
-            }
+		$sql = 'INSERT INTO `Users` (`uName`, `pass`, `address1`, `address2`, `city`, `stateCode`, `phone`, `fName`, `lName`, `salt`, `email`) 
+        		VALUES (' . $this->db->escape($uName) . ', ' .
+                    $this->db->escape($hash['hash']) . ',	' .
+                    $this->db->escape($add1) . ', ' .
+                    $this->db->escape($add2) . ', ' .
+                    $this->db->escape($city) . ', ' .
+                    $this->db->escape($stateCode) . ', ' .
+                    $this->db->escape($phone) . ', ' .
+                    $this->db->escape($fName) . ', ' .
+                    $this->db->escape($lName) . ', ' .
+                    $this->db->escape($userSalt) . ', ' .
+                    $this->db->escape($email) . ')';
 
+            }
+	    
             
             else
             {
-                
-		$sql = $this->db->get_where('Users', array('uName' => $uName));
+                $num_errors = 0;
+		$sql = "SELECT 1 FROM `Users` WHERE `uName`='" . $uName . "' LIMIT 1";
                 
 		if($this->db->query($sql)->num_rows() > 0)
                 {
-                    $this->session->set_userdata('error', 'error_uName');
-                    redirect('register');
+                    $this->session->set_userdata('error_uName', '1');
+		    $num_errors++;
                 }
-		$sql = $this->db->get_where('Users', array('email' => $email));
+		$sql = "SELECT 1 FROM `Users` WHERE `email`='" . $email . "' LIMIT 1";
 		if($this->db->query($sql)->num_rows() > 0)
 		{
-		    $this->session->set_userdata('error', 'error_email');
+		    $this->session->set_userdata('error_email', '1');
+		    $num_errors++;
+		}
+		if($num_errors>0)
+		{
+		    $num_errors = 0;
 		    redirect('register');
 		}
-            }
-            
+	    }
+		    $this->session->unset_userdata('error_email');
+		    $this->session->unset_userdata('error_uName');
 		    $sql = 'INSERT INTO `Users` (`uName`, `pass`, `address1`, `address2`, `city`, `stateCode`, `phone`, `fName`, `lName`, `salt`, `email`) 
         			 VALUES (' . $this->db->escape($uName) . ', ' .
                     $this->db->escape($hash['hash']) . ',	' .
@@ -75,7 +94,7 @@ class Register extends CI_Controller {
                     $this->db->escape($lName) . ', ' .
                     $this->db->escape($userSalt) . ', ' .
                     $this->db->escape($email) . ')';
-
+	    
             if ($this->db->query($sql))
             {
                 $this->session->set_userdata('error', '1');

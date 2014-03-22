@@ -24,7 +24,7 @@
                 echo '</td><td>';
                 echo form_input($data);
                 echo '</td>';
-                if ($this->session->userdata('error') == 'error_uName')
+                if ($this->session->userdata('error_uName') == '1')
                     echo '<td class="error">* Username already registered</td>';
                 echo '</tr>';
 				
@@ -91,9 +91,9 @@
                 echo 'Email: ';
                 echo '</td><td>';
                 echo form_input($data);
-                echo '</td></tr>';
-		if($this->session->userdata('error') == 'error_email')
-			echo '<td class="error">Email is registered to another account</td>';
+                echo '</td>';
+		if($this->session->userdata('error_email') == '1')
+			echo '<td class="error"> *Email is registered to another account</td>';
 		echo '</tr></table>';
 		
                 echo form_submit('registerSubmit', 'Register');
