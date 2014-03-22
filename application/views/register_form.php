@@ -3,6 +3,22 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <title>Register New User</title>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+	 <script type="text/javascript">
+            $(document).ready(function(){ $("#btn_fill_form").click(function autofill()
+            {
+                document.getElementById("uName").value = "Dev";
+                document.getElementById("add1").value = "some add1";
+                document.getElementById("add2").value = "some add2";
+                document.getElementById("city").value = "Denton";
+                document.getElementById("stateCode").value = "TX";
+                document.getElementById("phone").value = "18005555555";
+                document.getElementById("fName").value = "Development";
+                document.getElementById("lName").value = "Mastery";
+		document.getElementById("email").value = "noreply@noreply.com";
+            });
+	    });
+        </script>
     </head>
 
     <body>
@@ -13,7 +29,7 @@
                 <?php
                 echo '<tr><td>' . form_open('register/dohash') . '</tr></td>';
 
-                $data = array('id' => 'btn_fill_form', 'name' => 'btn_fill_form', 'content' => 'Autofill', 'onClick' => 'this.onclick=function(){autofill()};');
+                $data = array('id' => 'btn_fill_form', 'name' => 'btn_fill_form', 'content' => 'Autofill');
                 echo '<tr><td>';
                 echo form_button($data);
                 echo '</td></tr>';
@@ -104,20 +120,7 @@
                 ?>
             </table>
         </div>
-        <script type="text/javascript">
-            function autofill()
-            {
-                document.getElementById("uName").value = "Dev";
-                document.getElementById("add1").value = "some add1";
-                document.getElementById("add2").value = "some add2";
-                document.getElementById("city").value = "Denton";
-                document.getElementById("stateCode").value = "TX";
-                document.getElementById("phone").value = "18005555555";
-                document.getElementById("fName").value = "Development";
-                document.getElementById("lName").value = "Mastery";
-		document.getElementById("email").value = "noreply@noreply.com";
-            }
-        </script>
+       
 
 
 
