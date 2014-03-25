@@ -4,6 +4,11 @@ require_once('generateHash.php');
 
 class Login extends CI_Controller {
 
+    function __construct()
+    {
+        parent::__construct();
+    }
+    
     function index()
     {
         $this->load->library('session');
@@ -12,8 +17,16 @@ class Login extends CI_Controller {
         $this->load->helper('security');
         $this->load->view('header');
         $this->load->view('login_form');
+        if($this->session->userdata('loggedIn')=='TRUE')
+        {
+            redirect('home');
+        }
     }
-
+    function logout()
+    {
+        $this->session->sess_destroy();
+        redirect('home');
+    }
     function doLogin()
     {
 
@@ -37,18 +50,18 @@ class Login extends CI_Controller {
                 $sessionData = array('uName' => $u_name, 'loggedIn' => 'TRUE');
                 $this->session->unset_userdata('loginSuccess');
                 $this->session->set_userdata($sessionData);
-                $this->session->unset_userdata('error');
+                $this->session->unset_userdata('error_login');
                 redirect('home');
             }
             else
             {
-                $this->session->set_userdata(array('error' => 'error_login', 'loggedIn' => 'FALSE'));
+                $this->session->set_userdata(array('error_login' => '1', 'loggedIn' => 'FALSE'));
                 redirect('login');
             }
         }
         else
         {
-            $this->session->set_userdata(array('error' => 'error_login', 'loggedIn' => 'FALSE'));
+            $this->session->set_userdata(array('error_login' => '1', 'loggedIn' => 'FALSE'));
             redirect('login');
         }
     }

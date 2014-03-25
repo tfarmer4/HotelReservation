@@ -17,6 +17,11 @@ class Register extends CI_Controller {
         $this->load->helper('security');
         $this->load->view('header');
         $this->load->view('register_form');
+	$this->load->library('session');
+	if($this->session->userdata('loggedIn')=='TRUE')
+	{
+	    redirect('home');
+	}
     }
 
     function doHash()
@@ -24,7 +29,8 @@ class Register extends CI_Controller {
         $password = $this->input->post('password', TRUE);
         if ($password)
         {
-
+	    $this->session->unset_userdata('error_email');
+	    $this->session->unset_userdata('error_uName');
             $uName = $this->input->post('username', TRUE);
             $add1 = $this->input->post('address1', TRUE);
             $add2 = $this->input->post('address2', TRUE);
@@ -80,8 +86,7 @@ class Register extends CI_Controller {
 		    redirect('register');
 		}
 	    }
-		    $this->session->unset_userdata('error_email');
-		    $this->session->unset_userdata('error_uName');
+
 		    $sql = 'INSERT INTO `Users` (`uName`, `pass`, `address1`, `address2`, `city`, `stateCode`, `phone`, `fName`, `lName`, `salt`, `email`) 
         			 VALUES (' . $this->db->escape($uName) . ', ' .
                     $this->db->escape($hash['hash']) . ',	' .

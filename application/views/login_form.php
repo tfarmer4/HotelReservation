@@ -13,7 +13,7 @@ $(document).ready(function()
     });
 </script>
 
-
+<!-- TODO: Add client side input validation -->
 <?php endif;?>
 
 
@@ -25,31 +25,33 @@ $(document).ready(function()
 	{
 		echo 'Registration Successful!';
 	}?>
-<!-- TODO: Add client side input validation -->
+
 <table border="0">
-<?php 
-                     if($this->session->userdata('error')=='error_login')
+    <tbody>
+	<?php 
+                     if($this->session->userdata('error_login')=='1')
                      {
-                         echo '<td class="error">* Wrong username or password.</td></tr>';
-                         $this->session->unset_userdata('error');
+                         echo '<tr><td class="error">* Wrong username/password combination.</td></tr>';
+                         $this->session->unset_userdata('error_login');
                      }
                      echo form_open('login/doLogin');
-	$data = array('id'=>'uname', 'maxlength'=>'16', 'name'=>'username', "required" => "required");
-	echo '<tr><td>';
-	echo 'Username: ';
-	echo '</td><td>';
-	echo form_input($data);
-	echo '</td></tr>';
-	$data = array('id'=>'pass', 'maxlength'=>'16', 'name'=>'password', "required" => "required");
-	echo '<tr><td>';
-	echo 'Password: ';
-	echo '</td><td>';
-	echo form_password($data);
-	echo '</td></tr><tr><td>';
-	echo form_submit('loginsubmit', 'Login');
-	echo '</td></tr>';
-	echo form_close();
-?>
+	    $data = array('id'=>'uname', 'maxlength'=>'16', 'name'=>'username', "required" => "required");
+	    echo '<tr><td>';
+	    echo 'Username: ';
+	    echo '</td><td>';
+	    echo form_input($data);
+	    echo '</td></tr>';
+	    $data = array('id'=>'pass', 'maxlength'=>'16', 'name'=>'password', "required" => "required");
+	    echo '<tr><td>';
+	    echo 'Password: ';
+	    echo '</td><td>';
+	    echo form_password($data);
+	    echo '</td></tr><tr><td>';
+	    echo form_submit('loginsubmit', 'Login');
+	    echo '</td></tr>';
+	    echo form_close();
+	?>
+    </tbody>
 </table>
 </div>
 
