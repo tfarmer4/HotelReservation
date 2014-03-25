@@ -48,6 +48,8 @@ $(document).ready(function()
 	    echo form_password($data);
 	    echo '</td></tr><tr><td>';
 	    echo form_submit('loginsubmit', 'Login');
+	    echo '</td><td>';
+	    echo '<input type="button" value="Register New User" onclick="location.href=\'register\';" name="btn_register"/>';
 	    echo '</td></tr>';
 	    echo form_close();
 	?>
