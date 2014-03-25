@@ -11,7 +11,7 @@
                 document.getElementById("add1").value = "some add1";
                 document.getElementById("add2").value = "some add2";
                 document.getElementById("city").value = "Denton";
-                document.getElementById("stateCode").value = "TX";
+                $("#main select").val("TX");
                 document.getElementById("phone").value = "18005555555";
                 document.getElementById("fName").value = "Development";
                 document.getElementById("lName").value = "Mastery";
@@ -88,10 +88,64 @@
                 echo '</td></tr>';
 
                 $data = array('id' => 'stateCode', 'maxlength' => '2', 'name' => 'stateCode', "required" => "required");
+		$options = array (
+                    'Select' => 'Select',
+                    'AL' => 'Alabama',
+                    'AK' => 'Alaska',
+                    'AZ' => 'Arizona',
+                    'AR' => 'Arkansas',
+                    'CA' => 'California',
+                    'CO' => 'Colorado',
+                    'CT' => 'Connecticut',
+                    'DE' => 'Delaware',
+		    'DC' => 'District of Columbia',
+                    'FL' => 'Florida',
+                    'GA' => 'Georgia',
+                    'HI' => 'Hawaii',
+                    'ID' => 'Idaho',
+                    'IL' => 'Illinois',
+                    'IN' => 'Indiana',
+                    'IA' => 'Iowa',
+                    'KS' => 'Kansas',
+                    'KY' => 'Kentucky',
+                    'LA' => 'Louisiana',
+                    'ME' => 'Maine',
+                    'MD' => 'Maryland',
+                    'MA' => 'Massachusetts',
+                    'MI' => 'Michigan',
+                    'MN' => 'Minnesota',
+                    'MS' => 'Mississippi',
+                    'MO' => 'Missouri',
+                    'MT' => 'Montana',
+                    'NE' => 'Nebraska',
+                    'NV' => 'Nevada',
+                    'NH' => 'New Hampshire',
+                    'NJ' => 'New Jersey',
+                    'NM' => 'New Mexico',
+                    'NY' => 'New York',
+                    'NC' => 'North Carolina',
+                    'ND' => 'North Dakota',
+                    'OH' => 'Ohio',
+                    'OK' => 'Oklahoma',
+                    'OR' => 'Oregon',
+                    'PA' => 'Pennsylvania',
+                    'RI' => 'Rhode Island',
+                    'SC' => 'South Carolina',
+                    'SD' => 'South Dakota',
+                    'TN' => 'Tennessee',
+                    'TX' => 'Texas',
+                    'UT' => 'Utah',
+                    'VT' => 'Vermont',
+                    'VA' => 'Virginia',
+                    'WA' => 'Washington',
+                    'WV' => 'West Virginia',
+                    'WI' => 'Wisconsin',
+                    'WY' => 'Wyoming'
+                    );
                 echo '<tr><td>';
                 echo 'State: ';
                 echo '</td><td>';
-                echo form_input($data);
+		echo form_dropdown('stateCode',$options, 'Select', $data);
                 echo '</td></tr>';
 
                 $data = array('id' => 'phone', 'maxlength' => '10', 'name' => 'phone', "required" => "required");
