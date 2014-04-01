@@ -6,7 +6,7 @@
 			<div class="content-module">
 			
 				<div class="content-module-heading cf">
-					<h3 class="fl">QualityClix Page Views</h3>
+					
 					<span class="fr expand-collapse-text">Click to collapse</span>
 					<span class="fr expand-collapse-text initial-expand">Click to expand</span>
 				</div> <!-- end content-module-heading -->

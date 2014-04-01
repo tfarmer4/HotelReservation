@@ -8,7 +8,7 @@ class Login extends CI_Controller {
     {
         parent::__construct();
     }
-    
+    //TODO: Add server side input validation
     function index()
     {
         $this->load->library('session');
@@ -65,5 +65,42 @@ class Login extends CI_Controller {
             redirect('login');
         }
     }
+    
+    function admin_login()
+    {
+        $u_name = $this->input->post('username', TRUE) ? $this->input->post('username', TRUE) : '';
+        $pw = $this->input->post('password', TRUE) ? $this->input->post('password', TRUE) : '';
+        $this->db->select('uName,pass AS hash, salt');
+        $this->db->from('Users');
+        $this->db->where('uName', $u_name);
+        $query = $this->db->get();
+
+        if ($query->num_rows() == 1)
+        {
+
+            $row = $query->row();
+            $generator = new GenerateHash($pw, $row->salt);
+            $hash = $generator->hash($pw, $row->salt);
+
+            if ($row->hash == $hash['hash'])
+            {
+                $sessionData = array('uName' => $u_name, 'loggedIn' => 'TRUE', 'admin'=>'TRUE');
+                $this->session->unset_userdata('loginSuccess');
+                $this->session->set_userdata($sessionData);
+                $this->session->unset_userdata('error_login');
+                redirect('admin_home');
+            }
+            else
+            {
+                $this->session->set_userdata(array('error_login' => '1', 'loggedIn' => 'FALSE'));
+                redirect('login');
+            }
+        }
+        else
+        {
+            $this->session->set_userdata(array('error_login' => '1', 'loggedIn' => 'FALSE'));
+            redirect('login');
+        }
+    }  
 
 }

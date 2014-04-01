@@ -1,5 +1,5 @@
 <!Doctype HTML>
-
+<!--Add client side input validation-->
 <link rel="stylesheet" href="../Main.css" />
 
 <div id="header">
@@ -50,5 +50,8 @@
         <li><a href="<?php echo site_url();?>/home">Home</a></li>
         <li><a href="<?php echo site_url();?>/reservations">My Reservation</a></li>
         <li><a href="<?php echo site_url();?>/about">About Us</a></li>
+        <?php if($this->session->userdata('admin')=='TRUE'):?>
+        <li><a href="<?php echo site_url();?>/admin_home">Admin</a></li>
+        <?php endif;?>
     </ul>
 </div>

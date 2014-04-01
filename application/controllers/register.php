@@ -26,6 +26,7 @@ class Register extends CI_Controller {
 
     function doHash()
     {
+	//TODO: Add server side input validation code
         $password = $this->input->post('password', TRUE);
         if ($password)
         {
@@ -48,8 +49,8 @@ class Register extends CI_Controller {
                 $sql = "DELETE FROM `Users` WHERE uName='Dev'";
                 $this->db->query($sql);
                 $this->session->userdata('error', 1);
-		$sql = 'INSERT INTO `Users` (`uName`, `pass`, `address1`, `address2`, `city`, `stateCode`, `phone`, `fName`, `lName`, `salt`, `email`) 
-        		VALUES (' . $this->db->escape($uName) . ', ' .
+		$sql = 'INSERT INTO `Users` (`uName`, `pass`, `address1`, `address2`, `city`, `stateCode`, `phone`, `fName`, `lName`, `salt`, `email`, `isAdmin`) 
+        			 VALUES (' . $this->db->escape($uName) . ', ' .
                     $this->db->escape($hash['hash']) . ',	' .
                     $this->db->escape($add1) . ', ' .
                     $this->db->escape($add2) . ', ' .
@@ -59,7 +60,8 @@ class Register extends CI_Controller {
                     $this->db->escape($fName) . ', ' .
                     $this->db->escape($lName) . ', ' .
                     $this->db->escape($userSalt) . ', ' .
-                    $this->db->escape($email) . ')';
+                    $this->db->escape($email) . ', ' .
+		    $this->db->escape(true) . ')';
 
             }
 	    

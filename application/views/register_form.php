@@ -4,19 +4,21 @@
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <title>Register New User</title>
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<!--TODO: Add client side validation code in the script below-->
 	 <script type="text/javascript">
-            $(document).ready(function(){ $("#btn_fill_form").click(function autofill()
-            {
-                document.getElementById("uName").value = "Dev";
-                document.getElementById("add1").value = "some add1";
-                document.getElementById("add2").value = "some add2";
-                document.getElementById("city").value = "Denton";
-                $("#main select").val("TX");
-                document.getElementById("phone").value = "18005555555";
-                document.getElementById("fName").value = "Development";
-                document.getElementById("lName").value = "Mastery";
-		document.getElementById("email").value = "noreply@noreply.com";
-            });
+            $(document).ready(function(){
+		$("#btn_fill_form").click(function autofill()
+		{
+		    document.getElementById("uName").value = "Dev";
+		    document.getElementById("add1").value = "some add1";
+		    document.getElementById("add2").value = "some add2";
+		    document.getElementById("city").value = "Denton";
+		    $("#main select").val("TX");
+		    document.getElementById("phone").value = "18005555555";
+		    document.getElementById("fName").value = "Development";
+		    document.getElementById("lName").value = "Mastery";
+		    document.getElementById("email").value = "noreply@noreply.com";
+		});
 	    });
         </script>
     </head>

@@ -6,9 +6,10 @@ class Admin_main_mdl extends CI_Model {
 	}
 	
 	public function validate_user($username, $password) {
-		$this->db->where("username", $username);
-		$this->db->where("password", $password);
-		$query = $this->db->get("tbluser", 1);
+		$this->db->where("uName", $username);
+		$this->db->where("pass", $password);
+		$this->db->where("isAdmin", '1');
+		$query = $this->db->get("Users", 1);
 		return $query->result_array();
 	}
 	
@@ -22,12 +23,12 @@ class Admin_main_mdl extends CI_Model {
 	
 	function change_password($user, $new_password) {
 		return $this->db
-					->update("tbluser", array("Password" => $new_password));	
+					->update("Users", array("pass" => $new_password));	
 	}
 	
-	public function get_all_countries() {
+	public function get_all_cities() {
 		return $this->db
-					->get("country")
+					->get("city")
 					->result_array();
 	}
 	

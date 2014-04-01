@@ -20,46 +20,30 @@ class Admin extends CI_Controller {
 		
 		// load helpers
 		$this->load->helper('url');
-		$this->load->helper('general_helper');
+		$this->load->helper('form');
+		//$this->load->helper('general_helper');
 		
 		// load models
 		$this->load->model("admin_main_mdl");
+		
+		$this->load->view("header");
 	}
 	
 	public function index() {
-		if($this->session->userdata('logged_in')) {
+		if($this->session->userdata('loggedIn')) {
 			redirect("index.php/admin_home", 'refresh');
 		} else {
 			// load views
-			$this->load->view('admin/admin');
-			$this->load->view('admin/templates/footer');
+			$this->load->view('admin');
+			//$this->load->view('admin/templates/footer');
 		}
 	}
 	
-	public function login() {
-		$message = "";
-		extract($_POST);
-		if(empty($username) || empty($password)) {
-			$message = "Please provide username and password";
-		} else {
-			if($user = $this->admin_main_mdl->validate_user($username, $password)) {
-				$this->session->set_userdata('logged_in', $user);
-				redirect('index.php/admin_home', 'refresh');
-			} else {
-				$message = "Username or password is invalid";
-			}
-		}	
-		if(isset($message)) {
-			// load views
-			$this->load->view('admin/admin', array("error" => $message));
-			$this->load->view('admin/templates/footer');
-		}
-	}
 	
 	public function logout() {
 		$this->session->unset_userdata('logged_in');
 		// load views
-		$this->load->view('admin/admin', array("success" => "You are logged out!!!"));
-		$this->load->view('admin/templates/footer');
+		$this->load->view('admin', array("success" => "You are logged out!!!"));
+		//$this->load->view('admin/templates/footer');
 	}
 }

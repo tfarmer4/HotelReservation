@@ -4,6 +4,7 @@
 
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Login</title>
+<!-- TODO: Add client side input validation -->
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 <?php if($this->session->userdata('error')=='error_login'):?>
 <script>
@@ -13,7 +14,7 @@ $(document).ready(function()
     });
 </script>
 
-<!-- TODO: Add client side input validation -->
+
 <?php endif;?>
 
 
