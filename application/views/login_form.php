@@ -6,16 +6,7 @@
 <title>Login</title>
 <!-- TODO: Add client side input validation -->
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-<?php if($this->session->userdata('error')=='error_login'):?>
-<script>
-$(document).ready(function()
-    {
-        $("#head_login").hide();
-    });
-</script>
 
-
-<?php endif;?>
 
 
 </head>
@@ -35,7 +26,7 @@ $(document).ready(function()
                          echo '<tr><td class="error">* Wrong username/password combination.</td></tr>';
                          $this->session->unset_userdata('error_login');
                      }
-                     echo form_open('login/doLogin');
+                     echo '<tr><td>'.form_open('login/doLogin'). '</td></tr>';;
 	    $data = array('id'=>'uname', 'maxlength'=>'16', 'name'=>'username', "required" => "required");
 	    echo '<tr><td>';
 	    echo 'Username: ';
@@ -52,7 +43,7 @@ $(document).ready(function()
 	    echo '</td><td>';
 	    echo '<input type="button" value="Register New User" onclick="location.href=\'register\';" name="btn_register"/>';
 	    echo '</td></tr>';
-	    echo form_close();
+	    echo '<tr><td>'. form_close() . '</td></tr>';
 	?>
     </tbody>
 </table>

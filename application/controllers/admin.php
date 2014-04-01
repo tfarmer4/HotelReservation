@@ -12,7 +12,7 @@ class Admin extends CI_Controller {
 	 *
 	 */
 	 
-	public function admin() {
+	public function __construct() {
 		parent::__construct();
 
 		//load library
@@ -30,8 +30,8 @@ class Admin extends CI_Controller {
 	}
 	
 	public function index() {
-		if($this->session->userdata('loggedIn')) {
-			redirect("index.php/admin_home", 'refresh');
+		if($this->session->userdata('loggedIn')=='TRUE' && $this->session->userdata('admin') == 1) {
+			redirect("admin_home");
 		} else {
 			// load views
 			$this->load->view('admin');

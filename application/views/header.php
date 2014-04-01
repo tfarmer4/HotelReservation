@@ -5,9 +5,9 @@
 <div id="header">
     <div id="login" align="right">
         <?php
-        if (!$this->session->userdata('uName') &&
+        if (!$this->session->userdata('uName') ||(
                 $this->session->userdata('loggedIn') != 'TRUE' &&
-                $this->session->userdata('error_login') != '1'):
+                $this->session->userdata('error_login') != '1')):
             ?>
             <form method="post" action="login/dologin"  id="head_login">
                 <table>

@@ -73,6 +73,7 @@ class Login extends CI_Controller {
         $this->db->select('uName,pass AS hash, salt');
         $this->db->from('Users');
         $this->db->where('uName', $u_name);
+        $this->db->where('isAdmin', true);
         $query = $this->db->get();
 
         if ($query->num_rows() == 1)
@@ -93,13 +94,17 @@ class Login extends CI_Controller {
             else
             {
                 $this->session->set_userdata(array('error_login' => '1', 'loggedIn' => 'FALSE'));
-                redirect('login');
+                unset($_POST['username']);
+                unset($_POST['password']);
+                redirect('admin');
             }
         }
         else
         {
             $this->session->set_userdata(array('error_login' => '1', 'loggedIn' => 'FALSE'));
-            redirect('login');
+            unset($_POST['username']);
+            unset($_POST['password']);
+            redirect('admin');
         }
     }  
 

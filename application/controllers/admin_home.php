@@ -16,16 +16,17 @@ class Admin_home extends CI_Controller {
 		$this->load->model("admin_main_mdl");
 		
 		// check if admin logged in
-		if(!$this->session->userdata('loggedIn')) {
-			redirect("admin", "refresh");	
+		if(!$this->session->userdata('admin')) {
+			redirect("admin");	
 		}
+		$this->load->view('header');
+		$this->load->view('admin_home');
+		
+
 	}
 	
 	public function index() {
-		$data["page"] = "admin_home";
-		$data["user"] = $this->session->userdata('loggedIn');
-		$this->load->view('header', $data);
-		$this->load->view('admin_home');
+		
 		//$this->load->view('admin/templates/footer');
 	}
 }
