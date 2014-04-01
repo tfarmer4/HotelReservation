@@ -30,19 +30,24 @@
 		<option value="6">Corpus Christi</option>
 	</select>						
 	</label>
-					
+
+	<script src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
+	<script>   
+    $(function() {
+         $( "#datepicker" ).datepicker();   
+    }); 
+	</script>
 	<label for="hotel-checkin" class="calendar-input">
-	Check-in
-	<input name="checkInDate" preformat="" type="text" id="hotel-checkin" placeholder="Choose Date" autocomplete="off" >
-						
-	</label>
-					
+	Check-In
+	<input name="checkInDate" preformat="" type="text" id="datepicker" placeholder="Choose Date" autocomplete="off" >
+	</label>	
 	<label for="hotel-checkout" class="calendar-input margin-change">
-	check-out
-	<input name="checkOutDate" preformat="" type="text" id="hotel-checkout" placeholder="Choose Date" autocomplete="off" >
+	Check-Out
+	<input name="checkOutDate" preformat="" type="text" id="datepicker" placeholder="Choose Date" autocomplete="off" >	
 	</label>
-				
-	<label for="hotel-rooms" class="select">
+	
+			
+	<label for="hotel-rooms" class="select"> 
 	<span class="select-placeholder">Select Room Quantity</span>
 	<select id="hotel-rooms" name="numberOfRooms">
 		<option value="1">1 Room</option>
