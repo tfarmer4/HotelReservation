@@ -31,6 +31,7 @@
                         <td>
                             <input type="button" value="Register New User" onclick="location.href='register';" name="btn_register"/>
                         </td>
+                        <td>
                     </tr>
                 </table>
             </form>

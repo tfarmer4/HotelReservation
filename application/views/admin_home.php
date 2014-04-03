@@ -16,8 +16,9 @@
 	<?php echo form_open('admin_home/manageUsers');?>
 	<table id="user_tbl" border="1">
 	<?php $result_array = $this->admin_main_mdl->get_all_users();
-	
-	echo '<tr><td>User Name</td><td>Admin</td></tr>';
+	?>
+	<tr><td>User Name</td><td>Admin</td></tr>
+	<?php
 	foreach ($result_array as $row)
 	{
 		$options = array(
