@@ -38,12 +38,4 @@ class Admin extends CI_Controller {
 			//$this->load->view('admin/templates/footer');
 		}
 	}
-	
-	
-	public function logout() {
-		$this->session->unset_userdata('logged_in');
-		// load views
-		$this->load->view('admin', array("success" => "You are logged out!!!"));
-		//$this->load->view('admin/templates/footer');
-	}
 }

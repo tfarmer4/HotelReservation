@@ -10,14 +10,15 @@
 
 <div id="main">
 <h1>Admin Console</h1>
-<p>Under Construction!!!</p>
-<em>Change & Innovation</em>
+
+<h2>Manage Users</h2>
 <div id="users">
-	<?php echo form_open('admin_home/changeUsers');?>
+	<?php echo form_open('admin_home/manageUsers');?>
 	<table id="user_tbl" border="1">
-	<?php $query = $this->db->get('Users');
+	<?php $result_array = $this->admin_main_mdl->get_all_users();
+	
 	echo '<tr><td>User Name</td><td>Admin</td></tr>';
-	foreach ($query->result() as $row)
+	foreach ($result_array as $row)
 	{
 		$options = array(
                   'Admin_' . $row->uName  => 'Admin',

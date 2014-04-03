@@ -14,10 +14,11 @@ class Admin_home extends CI_Controller {
 		
 		// load models
 		$this->load->model("admin_main_mdl");
+		$this->load->model("hotel_model");
 		
 		// check if admin logged in
-		if(!$this->session->userdata('admin')) {
-			redirect("admin");	
+		if(!$this->session->userdata('admin') && !$this->session->userdata('loggedIn')) {
+			redirect("admin", "refresh");	
 		}
 		$this->load->view('header');
 		$this->load->view('admin_home');
@@ -30,9 +31,8 @@ class Admin_home extends CI_Controller {
 		//$this->load->view('admin/templates/footer');
 	}
 	
-	public function changeUsers()
+	public function manageUsers()
 	{
-		var_dump($_POST);
 		$query = $this->db->get('Users');
 		foreach($query->result() as $row)
 		{
@@ -58,5 +58,10 @@ class Admin_home extends CI_Controller {
 			}
 		}
 		redirect('admin_home', 'refresh');
+	}
+	
+	public function addHotels()
+	{
+		
 	}
 }
