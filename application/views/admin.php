@@ -4,6 +4,9 @@
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <title>Admin</title>
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function(){$("#login").hide();});
+	</script>
 <!--TODO: Add client side validation code in the script below-->
 	<link href="../Main.css" rel="stylesheet"/>
     </head>
