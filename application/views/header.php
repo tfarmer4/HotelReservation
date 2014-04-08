@@ -1,8 +1,27 @@
 <!Doctype HTML>
 <!--Add client side input validation-->
-<link rel="stylesheet" href="../Main.css" />
-
+<link rel="stylesheet" <?php echo 'href="' . base_url() . 'Main.css"'?> />
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js">
+</script>
+<script>
+$(document).ready(function(){
+    $("#login").hide();
+  $("#slidetoggle").click(function(){
+    $("#login").slideToggle(1000,function(){
+      if ($("#login").is(":visible")) {
+        $("#slidetoggle").text("Hide Login Form");
+      }
+      if ($("#login").is(":hidden")){
+        $("#slidetoggle").text("Show Login Form");
+      }
+  
+       });
+  });
+});
+</script>
+<div align="right"><button id="slidetoggle" align="right">Show Login Form</button></div>
 <div id="header">
+    
     <div id="login" align="right">
         <?php
         if (!$this->session->userdata('uName') ||(
@@ -40,7 +59,7 @@
     <form method="post" action="login/logout" id="head_logout">
     <table>
     <tbody>
-    <tr><td><input type="button" onclick="location.href='login/logout';" name="btn_logout" value="Logout"/></td></tr>
+    <tr><td><input type="button" onclick="location.href='<?php echo site_url()?>/login/logout';" name="btn_logout" value="Logout"/></td></tr>
     </tbody>
     </table>
     </form>
