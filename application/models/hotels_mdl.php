@@ -1,45 +1,55 @@
 <?php
 class Hotels_mdl extends CI_Model {
 
-	public function __construct() {
-		$this->load->database();
+	private $tableName= 'Hotels';
+	
+	function __construct(){
+		parent::__construct();
 	}
 	
-	public function get_hotels($table_name, $start, $max_rows) {
-		return $this->db
-					->select("$table_name.*, location.address as location")
-					->join('Location', "$table_name.FK_locationID=Location.LocationID", "left")
-					->get($table_name, $max_rows, $start)
-					->result_array();
+	function list_all(){
+		$this->db->order_by('hotelID','asc');
+		return $this->db->get($this->tableName);
 	}
 	
-	public function get_brand($table_name, $data) {
-		$result = $this->db
-					->where($data)
-					->get($table_name)
-					->result_array();
-		return isset($result[0]) ? $result[0] : array();
+	function count_all(){
+		return $this->db->count_all($this->tableName);
 	}
 	
-	public function add_brand($table_name, $data) {
-		$old = $this->get_brand($table_name, array("name" => $data["name"], "category_id" => $data["category_id"]));
-		if(count($old) < 1) {
-			$this->db->insert($table_name, $data);
-			return $this->db->insert_id();
-		} else {
-			return true;
-		}
+	function get_paged_list($limit = 10, $offset = 0){
+		$this
+			->db
+			->select($this->tableName . ".*, Location.address location")
+			->join("Location", $this->tableName . ".FK_locationID=Location.locationID", "left")
+			->order_by('hotelID', 'asc');
+		return $this->db->get($this->tableName, $limit, $offset);
 	}
 	
-	public function update_category($table_name, $where, $data) {
-		return $this->db
-					->where($where)
-					->update($table_name, $data);
+	function get_by_id($id){
+		$this
+			->db
+			->select($this->tableName . ".*, Location.address location")
+			->join("Location", $this->tableName . ".FK_locationID=Location.locationID", "left")
+			->where('hotelID', $id);
+		return $this->db->get($this->tableName);
 	}
 	
-	public function delete_category($table_name, $where) {
-		return $this->db
-					->where($where)
-					->delete($table_name);	
+	function save($hotel){
+		$location = $hotel["location"];
+		unset($hotel['location']);
+		$this->db->insert($this->tableName, $hotel);
+		return $this->db->insert_id();
+	}
+	
+	function update($id, $hotel) {
+		$location = $hotel["location"];
+		unset($hotel['location']);
+		$this->db->where('hotelID', $id);
+		$this->db->update($this->tableName, $hotel);
+	}
+	
+	function delete($id){
+		$this->db->where('hotelID', $id);
+		$this->db->delete($this->tableName);
 	}
 }
