@@ -1,4 +1,4 @@
-INSERT INTO `tlf0096`.`Hotels`
+INSERT INTO `eks0069`.`Hotels`
 (`hotelID`,
 `FK_locationID`,
 `hotelName`,

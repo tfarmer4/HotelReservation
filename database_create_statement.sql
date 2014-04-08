@@ -2,7 +2,7 @@ SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 
-USE `tlf0096` ;
+USE `eks0069` ;
 
 drop table if exists `Users`;
 drop table if exists `Guests`;
@@ -14,9 +14,9 @@ drop table if exists `Room_Reservation`;
 drop table if exists `Location`;
 
 -- -----------------------------------------------------
--- Table `tlf0096`.`Location`
+-- Table `eks0069`.`Location`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `tlf0096`.`Location` (
+CREATE TABLE IF NOT EXISTS `eks0069`.`Location` (
   `locationID` INT NOT NULL AUTO_INCREMENT,
   `address` VARCHAR(255) NOT NULL,
   `city` VARCHAR(45) NOT NULL,
@@ -27,9 +27,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `tlf0096`.`Hotels`
+-- Table `eks0069`.`Hotels`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `tlf0096`.`Hotels` (
+CREATE TABLE IF NOT EXISTS `eks0069`.`Hotels` (
   `hotelID` INT NOT NULL AUTO_INCREMENT,
   `FK_locationID` INT NOT NULL,
   `hotelName` VARCHAR(20) NOT NULL,
@@ -38,16 +38,16 @@ CREATE TABLE IF NOT EXISTS `tlf0096`.`Hotels` (
   INDEX `locationID_idx` (`FK_locationID` ASC),
   CONSTRAINT `locationID`
     FOREIGN KEY (`FK_locationID`)
-    REFERENCES `tlf0096`.`Location` (`locationID`)
+    REFERENCES `eks0069`.`Location` (`locationID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `tlf0096`.`Guests`
+-- Table `eks0069`.`Guests`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `tlf0096`.`Guests` (
+CREATE TABLE IF NOT EXISTS `eks0069`.`Guests` (
   `guestID` INT NOT NULL AUTO_INCREMENT,
   `fName` CHAR(20) NOT NULL,
   `lName` CHAR(20) NOT NULL,
@@ -63,10 +63,10 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `tlf0096`.`Users`
+-- Table `eks0069`.`Users`
 -- -----------------------------------------------------
 
-CREATE TABLE IF NOT EXISTS `tlf0096`.`Users` (
+CREATE TABLE IF NOT EXISTS `eks0069`.`Users` (
   `userID` INT NOT NULL AUTO_INCREMENT,
   `uName` CHAR(64) NOT NULL UNIQUE,
   `pass` CHAR(255) NOT NULL,
@@ -85,9 +85,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `tlf0096`.`Reservations`
+-- Table `eks0069`.`Reservations`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `tlf0096`.`Reservations` (
+CREATE TABLE IF NOT EXISTS `eks0069`.`Reservations` (
   `reservationID` INT NOT NULL AUTO_INCREMENT,
   `FK_guestID` INT NULL,
   `FK_userID` INT NULL,
@@ -99,21 +99,21 @@ CREATE TABLE IF NOT EXISTS `tlf0096`.`Reservations` (
   INDEX `userID_idx` (`FK_userID` ASC),
   CONSTRAINT `guestID`
     FOREIGN KEY (`FK_guestID`)
-    REFERENCES `tlf0096`.`Guests` (`guestID`)
+    REFERENCES `eks0069`.`Guests` (`guestID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `userID`
     FOREIGN KEY (`FK_userID`)
-    REFERENCES `tlf0096`.`Users` (`userID`)
+    REFERENCES `eks0069`.`Users` (`userID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `tlf0096`.`RoomTypes`
+-- Table `eks0069`.`RoomTypes`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `tlf0096`.`RoomTypes` (
+CREATE TABLE IF NOT EXISTS `eks0069`.`RoomTypes` (
   `roomTypeID` INT NOT NULL AUTO_INCREMENT,
   `roomPrice` DECIMAL(10,2) NOT NULL,
   `roomDesc` VARCHAR(255) NULL DEFAULT NULL,
@@ -124,9 +124,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `tlf0096`.`Rooms`
+-- Table `eks0069`.`Rooms`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `tlf0096`.`Rooms` (
+CREATE TABLE IF NOT EXISTS `eks0069`.`Rooms` (
   `roomID` INT NOT NULL AUTO_INCREMENT,
   `FK_roomTypeID` INT NOT NULL,
   `FK_hotelID` INT NOT NULL,
@@ -136,21 +136,21 @@ CREATE TABLE IF NOT EXISTS `tlf0096`.`Rooms` (
   INDEX `roomTypeID_idx` (`FK_roomTypeID` ASC),
   CONSTRAINT `roomTypeID`
     FOREIGN KEY (`FK_roomTypeID`)
-    REFERENCES `tlf0096`.`RoomTypes` (`roomTypeID`)
+    REFERENCES `eks0069`.`RoomTypes` (`roomTypeID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `hotelID`
     FOREIGN KEY (`FK_hotelID`)
-    REFERENCES `tlf0096`.`Hotels` (`hotelID`)
+    REFERENCES `eks0069`.`Hotels` (`hotelID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `tlf0096`.`Room_Reservation`
+-- Table `eks0069`.`Room_Reservation`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `tlf0096`.`Room_Reservation` (
+CREATE TABLE IF NOT EXISTS `eks0069`.`Room_Reservation` (
   `FK_roomID` INT NOT NULL,
   `FK_reservationID` INT NOT NULL,
   INDEX `reservationID_idx` (`FK_reservationID` ASC),
@@ -158,12 +158,12 @@ CREATE TABLE IF NOT EXISTS `tlf0096`.`Room_Reservation` (
   PRIMARY KEY (`FK_reservationID`, `FK_roomID`),
   CONSTRAINT `roomId`
     FOREIGN KEY (`FK_roomID`)
-    REFERENCES `tlf0096`.`Rooms` (`roomID`)
+    REFERENCES `eks0069`.`Rooms` (`roomID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `reservationID`
     FOREIGN KEY (`FK_reservationID`)
-    REFERENCES `tlf0096`.`Reservations` (`reservationID`)
+    REFERENCES `eks0069`.`Reservations` (`reservationID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
