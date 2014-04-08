@@ -1,4 +1,4 @@
-INSERT INTO `tlf0096`.`Location`
+INSERT INTO `eks0069`.`Location`
 (`locationID`,
 `address`,
 `city`,
