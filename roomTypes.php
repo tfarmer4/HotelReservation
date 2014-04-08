@@ -1,0 +1,247 @@
+<?php 
+
+class RoomTypes extends CI_Controller {
+	 
+	// num of records per page
+	private $limit = 10;
+	
+	private $moduleName = "roomType";
+	
+	function __construct()
+	{
+		parent::__construct();
+		
+		// load library
+		$this->load->library(array('table','form_validation'));
+		
+		// load helper
+		$this->load->helper('url');
+		
+		// load model
+		$this->load->model('RoomTypes_mdl','',TRUE);
+	}
+	
+	function index($offset = 0)
+	{
+		$data['title'] = "All " . ucfirst($this->moduleName) . 's';
+		$data['moduleName'] = $this->moduleName;
+		
+		// offset
+		$uri_segment = 3;
+		$offset = $this->uri->segment($uri_segment);
+		
+		// load data
+		$hotels = $this->RoomTypes_mdl->get_paged_list($this->limit, $offset)->result();
+		
+		// generate pagination
+		$this->load->library('pagination');
+		$config['base_url'] = site_url($this->moduleName . "s/index/");
+ 		$config['total_rows'] = $this->RoomTypes_mdl->count_all();
+ 		$config['per_page'] = $this->limit;
+		$config['uri_segment'] = $uri_segment;
+		$this->pagination->initialize($config);
+		$data['pagination'] = $this->pagination->create_links();
+		
+		// generate table data
+		$this->load->library('table');
+		$this->table->set_template(array('table_open' => '<table border="0" cellpadding="0" cellspacing="0" class="table table-hover">'));
+		$this->table->set_empty("&nbsp;");
+		$this->table->set_heading('Location ID', 'Room Price', 'Room Description', 'Is Smoking', 'Max Guests', 'Actions');
+		$i = 0 + $offset;
+		foreach ($hotels as $obj)
+		{
+			$this
+				->table
+				->add_row(
+					$obj->roomTypeID, 
+					$obj->roomPrice,
+					$obj->roomDesc,
+					($obj->isSmoking == "1" ? "Yes" : "No"),
+					$obj->maxGuests,
+					anchor($this->moduleName . "s/view/". $obj->roomTypeID, 'view', array('class'=>'view')).' | '.
+						anchor($this->moduleName . "s/update/". $obj->roomTypeID, 'update', array('class'=>'update')).' | '.
+						anchor($this->moduleName . "s/delete/". $obj->roomTypeID, 'delete', array('class'=>'delete','onclick'=>"return confirm('Are you sure want to delete this ". $this->moduleName ."?')"))
+				);
+		}
+		$data['table'] = $this->table->generate();
+		
+		// load view
+		$this->load->view('templates/header', $data);
+		$this->load->view($this->moduleName . "List", $data);
+		$this->load->view('templates/footer', $data);
+	}
+	
+	function add()
+	{
+		// set empty default form field values
+		$this->_set_fields();
+		
+		// set validation properties
+		$this->_set_rules();
+		
+		// set common properties
+		$data['title'] = "Add new " . $this->moduleName;
+		$data['message'] = '';
+		$data['action'] = site_url($this->moduleName . "s/addHandler");
+		$data['link_back'] = anchor($this->moduleName . 's/index/', 'Back to list of ' . $this->moduleName, array('class'=>'back'));
+	
+		// load view
+		$this->load->view('templates/header', $data);
+		$this->load->view($this->moduleName . "Edit", $data);
+		$this->load->view('templates/footer', $data);
+	}
+	
+	function addHandler()
+	{
+		// set common properties
+		$data['title'] = "Add new " . $this->moduleName;
+		$data['action'] = site_url($this->moduleName . "s/addHandler");
+		$data['link_back'] = anchor($this->moduleName . "s/index/", "Back to list of " . $this->moduleName . "s", array('class'=>'back'));
+		
+		// set empty default form field values
+		$this->_set_fields();
+		
+		// set validation properties
+		$this->_set_rules();
+		
+		// run validation
+		if ($this->form_validation->run() == FALSE)
+		{
+			$data['message'] = '';
+		}
+		else
+		{
+			// save data
+			$obj = array(
+				'roomPrice' => $this->input->post('roomPrice')
+				, 'roomDesc' => $this->input->post('roomDesc')
+				, 'isSmoking' => $this->input->post('isSmoking')
+				, 'maxGuests' => $this->input->post('maxGuests')
+			);
+			$id = $this->RoomTypes_mdl->save($obj);
+			
+			// set user message
+			$data['message'] = "<div class=\"success\">add new ". $this->moduleName ." success</div>";
+		}
+		
+		// load view
+		$this->load->view('templates/header', $data);
+		$this->load->view($this->moduleName .'Edit', $data);
+		$this->load->view('templates/footer', $data);
+	}
+	
+	function view($id)
+	{
+		// set common properties
+		$data['title'] = ucfirst($this->moduleName) . ' Details';
+		$data['link_back'] = anchor($this->moduleName . 's/index/', "Back to list of " . $this->moduleName . "s", array('class'=>'back'));
+		
+		// get obj details
+		$data['obj'] = $this->RoomTypes_mdl->get_by_id($id)->row();
+		
+		// load view
+		$this->load->view('templates/header', $data);
+		$this->load->view($this->moduleName .'View', $data);
+		$this->load->view('templates/footer', $data);
+	}
+	
+	function update($id)
+	{
+		// set validation properties
+		$this->_set_rules();
+		
+		// prefill form values
+		$obj = $this->RoomTypes_mdl->get_by_id($id)->row();
+		$this->form_data->roomTypeID = $id;
+		$this->form_data->roomPrice = $obj->roomPrice;
+		$this->form_data->roomDesc = $obj->roomDesc;
+		$this->form_data->isSmoking = $obj->isSmoking;
+		$this->form_data->maxGuests = $obj->maxGuests;
+		
+		// set common properties
+		$data['title'] = 'Update ' . $this->moduleName;
+		$data['message'] = '';
+		$data['action'] = site_url($this->moduleName .'s/updateHandler');
+		$data['link_back'] = anchor($this->moduleName .'s/index/','Back to list of '. $this->moduleName . 's',array('class'=>'back'));
+	
+		// load view
+		$this->load->view('templates/header', $data);
+		$this->load->view($this->moduleName .'Edit', $data);
+		$this->load->view('templates/footer', $data);
+	}
+	
+	function updateHandler()
+	{
+		// set common properties
+		$data['title'] = 'Update ' . $this->moduleName;
+		$data['action'] = site_url($this->moduleName . 's/updateHandler');
+		$data['link_back'] = anchor($this->moduleName . 's/index/','Back to list of '. $this->moduleName .'s', array('class'=>'back'));
+		
+		// set empty default form field values
+		$this->_set_fields();
+		// set validation properties
+		$this->_set_rules();
+		
+		// run validation
+		if ($this->form_validation->run() == FALSE)
+		{
+			$data['message'] = '';
+		}
+		else
+		{
+			// save data
+			$id = $this->input->post('roomTypeID');
+			$obj = array(
+				'roomPrice' => $this->input->post('roomPrice')
+				, 'roomDesc' => $this->input->post('roomDesc')
+				, 'isSmoking' => $this->input->post('isSmoking')
+				, 'maxGuests' => $this->input->post('maxGuests')
+			);
+			$this->RoomTypes_mdl->update($id, $obj);
+			
+			// set user message
+			$data['message'] = '<div class="success">update '. $this->moduleName .' success</div>';
+		}
+		
+		// load view
+		$this->load->view('templates/header', $data);
+		$this->load->view($this->moduleName .'Edit', $data);
+		$this->load->view('templates/footer', $data);
+	}
+	
+	function delete($id)
+	{
+		// delete person
+		$this->RoomTypes_mdl->delete($id);
+		
+		// redirect to person list page
+		redirect($this->moduleName . 's/index/', 'refresh');
+	}
+	
+	// set empty default form field values
+	function _set_fields()
+	{
+		$this->form_data->roomTypeID = '';
+		$this->form_data->roomPrice = '';
+		$this->form_data->roomDesc = '';
+		$this->form_data->isSmoking = '';
+		$this->form_data->maxGuests = '';
+	}
+	
+	// validation rules
+	function _set_rules()
+	{
+		//$this->form_validation->set_rules('roomTypeID', 'Location ID', 'trim|required');
+		$this->form_validation->set_rules('roomPrice', 'Room Price', 'trim|required');
+		$this->form_validation->set_rules('roomDesc', 'Room Description', 'trim|required');
+		$this->form_validation->set_rules('isSmoking', 'Is Smoking', 'trim|required');
+		$this->form_validation->set_rules('maxGuests', 'Max Guests', 'trim|required');
+		
+		// $this->form_validation->set_message('required', '* required');
+		$this->form_validation->set_message('required', '* required');
+		$this->form_validation->set_message('required', '* required');
+		$this->form_validation->set_message('required', '* required');
+		$this->form_validation->set_error_delimiters('<p class="error">', '</p>');
+	}
+
+}
