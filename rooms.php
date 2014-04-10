@@ -21,6 +21,7 @@ class Rooms extends CI_Controller {
 		$this->load->model('Rooms_mdl','',TRUE);
 		$this->load->model('RoomTypes_mdl','',TRUE);
 		$this->load->model('Hotels_mdl','',TRUE);
+
 	}
 	
 	function index($offset = 0)
