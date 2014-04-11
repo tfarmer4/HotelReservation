@@ -2,83 +2,240 @@
 
 class Hotels extends CI_Controller {
 	 
-	public function Hotels() {
+	// num of records per page
+	private $limit = 10;
+	
+	private $moduleName = "hotel";
+	
+	function __construct()
+	{
 		parent::__construct();
-
-		//load library
-		$this->load->library('session');
 		
-		// load helpers
+		// load library
+		$this->load->library(array('table','form_validation'));
+		
+		// load helper
 		$this->load->helper('url');
 		
-		// load models
-		$this->load->model("hotels_mdl");
-
+		// load model
+		$this->load->model('Hotels_mdl','',TRUE);
+		if(!$this->session->userdata('admin') == 'TRUE') {
+		
+			redirect('admin');
+		}
 	}
 	
-	private $table_name = "hotels";
-	private $max_rows = 20;
-	
-	// load admin projects view
-	public function index() {
-		$data["selected_tab"] = $this->router->fetch_class();
-		$data["selected_tab_item"] = $this->router->fetch_method();
-		$data["page_type"] = "table_editable";
-		$data["max_rows"] = $this->max_rows;
-		$data["hotels"] = $this->hotels_mdl->get_hotels($this->table_name, 0, $this->max_rows);
-		$data["total_rows"] = count($data["hotels"]);
+	function index($offset = 0)
+	{
+		$data['title'] = "All " . ucfirst($this->moduleName) . 's';
+		$data['moduleName'] = $this->moduleName;
 		
-		// load views
+		// offset
+		$uri_segment = 3;
+		$offset = $this->uri->segment($uri_segment);
+		
+		// load data
+		$hotels = $this->Hotels_mdl->get_paged_list($this->limit, $offset)->result();
+		
+		// generate pagination
+		$this->load->library('pagination');
+		$config['base_url'] = site_url($this->moduleName . "s/index/");
+ 		$config['total_rows'] = $this->Hotels_mdl->count_all();
+ 		$config['per_page'] = $this->limit;
+		$config['uri_segment'] = $uri_segment;
+		$this->pagination->initialize($config);
+		$data['pagination'] = $this->pagination->create_links();
+		
+		// generate table data
+		$this->load->library('table');
+		$this->table->set_template( array ( 'table_open'  => '<table border="0" cellpadding="0" cellspacing="0" class="table table-hover">' ));
+		$this->table->set_empty("&nbsp;");
+		$this->table->set_heading('Hotel ID', 'Location', 'Hotel Name', 'Hotel URL', 'Actions');
+		$i = 0 + $offset;
+		foreach ($hotels as $obj)
+		{
+			$this
+				->table
+				->add_row(
+					$obj->hotelID, 
+					$obj->location, 
+					$obj->hotelName, 
+					$obj->hotel_URL, 
+					anchor($this->moduleName . "s/view/". $obj->hotelID, 'view', array('class'=>'view')).' | '.
+						anchor($this->moduleName . "s/update/". $obj->hotelID, 'update', array('class'=>'update')).' | '.
+						anchor($this->moduleName . "s/delete/". $obj->hotelID, 'delete', array('class'=>'delete','onclick'=>"return confirm('Are you sure want to delete this ". $this->moduleName ."?')"))
+				);
+		}
+		$data['table'] = $this->table->generate();
+		
+		// load view
 		$this->load->view('templates/header', $data);
-		$this->load->view('list_all_hotels', $data);
+		$this->load->view($this->moduleName . "List", $data);
 		$this->load->view('templates/footer', $data);
 	}
 	
-	public function scrap_brands() {
-		$cell_phone_category_id = 1;
+	function add()
+	{
+		// set empty default form field values
+		$this->_set_fields();
 		
-		$data["selected_tab"] = $this->router->fetch_class();
-		$data["selected_tab_item"] = $this->router->fetch_method();
+		// set validation properties
+		$this->_set_rules();
 		
-		$html = file_get_contents("http://www.gsmarena.com/makers.php3");
-		$doc = phpQuery::newDocument($html);
-		phpQuery::selectDocument($doc);
+		// set common properties
+		$data['title'] = "Add new " . $this->moduleName;
+		$data['message'] = '';
+		$data['action'] = site_url($this->moduleName . "s/addHandler");
+		$data['link_back'] = anchor($this->moduleName . 's/index/', 'Back to list of ' . $this->moduleName, array('class'=>'back'));
+	
+		// load view
+		$this->load->view('templates/header', $data);
+		$this->load->view($this->moduleName . "Edit", $data);
+		$this->load->view('templates/footer', $data);
+	}
+	
+	function addHandler()
+	{
+		// set common properties
+		$data['title'] = "Add new " . $this->moduleName;
+		$data['action'] = site_url($this->moduleName . "s/addHandler");
+		$data['link_back'] = anchor($this->moduleName . "s/index/", "Back to list of " . $this->moduleName . "s", array('class'=>'back'));
 		
+		// set empty default form field values
+		$this->_set_fields();
 		
-		$urls = array();
-		if(pq("title")->text() == "List of all mobile phone brands - GSMArena.com") {
-			$images = pq("div.st-text img");
-			foreach($images as $key => $img) {
-				$brand = array();
-				$brand["category_id"] = $cell_phone_category_id;
-				$brand["name"] = pq($img)->attr("alt");
-				$brand["logo"] = pq($img)->attr("src");
-				$brand["status"] = "active";
-				$brand["href"] = "http://www.gsmarena.com/" . pq($img)->parent()->attr("href");
-				
-				$img = generate_unique_file_name("brand_", $brand["logo"]);
-				$img_and_path =  FCPATH . "/assets/brand_images/" . $img;
-				download_image($brand["logo"], $img_and_path);
-				$brand["logo"] = $img;
-				$brand_id = $this->brands_mdl->add_brand("brands", $brand);
-				
-				if(is_numeric($brand_id)) {
-					$urls[$key]["brand_id"] = $brand_id;
-					$urls[$key]["url"] = $brand["href"];
-					$urls[$key]["type"] = "brand";
-					$urls[$key]["status"] = "active";
-				}
-			}
+		// set validation properties
+		$this->_set_rules();
+		
+		// run validation
+		if ($this->form_validation->run() == FALSE)
+		{
+			$data['message'] = '';
+		}
+		else
+		{
+			// save data
+			$obj = array('location' => $this->input->post('location'),
+							'hotelName' => $this->input->post('hotelName'),
+							'hotel_URL' => $this->input->post('hotel_URL'));
+			$id = $this->Hotels_mdl->save($obj);
 			
-			$this->scrapper_mdl->add_urls_to_fetch("urls_to_fetch", $urls);
-			$data["test"] = $urls;
-		} else {
-			$data["error"] = "Unable to get page from gsmarena.com";
+			// set user message
+			$data['message'] = "<div class=\"success\">add new ". $this->moduleName ." success</div>";
 		}
 		
-		// load views
+		// load view
 		$this->load->view('templates/header', $data);
-		$this->load->view('scrap_brands', $data);
+		$this->load->view($this->moduleName .'Edit', $data);
 		$this->load->view('templates/footer', $data);
 	}
+	
+	function view($id)
+	{
+		// set common properties
+		$data['title'] = ucfirst($this->moduleName) . ' Details';
+		$data['link_back'] = anchor($this->moduleName . 's/index/', "Back to list of " . $this->moduleName . "s", array('class'=>'back'));
+		
+		// get obj details
+		$data['obj'] = $this->Hotels_mdl->get_by_id($id)->row();
+		
+		// load view
+		$this->load->view('templates/header', $data);
+		$this->load->view($this->moduleName .'View', $data);
+		$this->load->view('templates/footer', $data);
+	}
+	
+	function update($id)
+	{
+		// set validation properties
+		$this->_set_rules();
+		
+		// prefill form values
+		$obj = $this->Hotels_mdl->get_by_id($id)->row();
+		$this->form_data->hotelID = $id;
+		$this->form_data->location = $obj->location;
+		$this->form_data->hotelName = $obj->hotelName;
+		$this->form_data->hotel_URL = $obj->hotel_URL;
+		
+		// set common properties
+		$data['title'] = 'Update ' . $this->moduleName;
+		$data['message'] = '';
+		$data['action'] = site_url($this->moduleName .'s/updateHandler');
+		$data['link_back'] = anchor($this->moduleName .'s/index/','Back to list of '. $this->moduleName . 's',array('class'=>'back'));
+	
+		// load view
+		$this->load->view('templates/header', $data);
+		$this->load->view($this->moduleName .'Edit', $data);
+		$this->load->view('templates/footer', $data);
+	}
+	
+	function updateHandler()
+	{
+		// set common properties
+		$data['title'] = 'Update ' . $this->moduleName;
+		$data['action'] = site_url($this->moduleName . 's/updateHandler');
+		$data['link_back'] = anchor($this->moduleName . 's/index/','Back to list of '. $this->moduleName .'s', array('class'=>'back'));
+		
+		// set empty default form field values
+		$this->_set_fields();
+		// set validation properties
+		$this->_set_rules();
+		
+		// run validation
+		if ($this->form_validation->run() == FALSE)
+		{
+			$data['message'] = '';
+		}
+		else
+		{
+			// save data
+			$id = $this->input->post('hotelID');
+			$obj = array('location' => $this->input->post('location'),
+							'hotelName' => $this->input->post('hotelName'),
+							'hotel_URL' => $this->input->post('hotel_URL'));
+			$this->Hotels_mdl->update($id, $obj);
+			
+			// set user message
+			$data['message'] = '<div class="success">update '. $this->moduleName .' success</div>';
+		}
+		
+		// load view
+		$this->load->view('templates/header', $data);
+		$this->load->view($this->moduleName .'Edit', $data);
+		$this->load->view('templates/footer', $data);
+	}
+	
+	function delete($id)
+	{
+		// delete person
+		$this->Hotels_mdl->delete($id);
+		
+		// redirect to person list page
+		redirect($this->moduleName . 's/index/', 'refresh');
+	}
+	
+	// set empty default form field values
+	function _set_fields()
+	{
+		$this->form_data->hotelID = '';
+		$this->form_data->location = '';
+		$this->form_data->hotelName = '';
+		$this->form_data->hotel_URL = '';
+	}
+	
+	// validation rules
+	function _set_rules()
+	{
+		//$this->form_validation->set_rules('hotelID', 'Hotel ID', 'trim|required');
+		$this->form_validation->set_rules('location', 'Location', 'trim|required');
+		$this->form_validation->set_rules('hotelName', 'Hotel Name', 'trim|required');
+		$this->form_validation->set_rules('hotel_URL', 'Hotel URL', 'trim|required');
+		
+		// $this->form_validation->set_message('required', '* required');
+		$this->form_validation->set_message('required', '* required');
+		$this->form_validation->set_message('required', '* required');
+		$this->form_validation->set_message('required', '* required');
+		$this->form_validation->set_error_delimiters('<p class="error">', '</p>');
+	}
+
 }
