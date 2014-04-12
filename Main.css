@@ -61,6 +61,11 @@ ul#nav li a:hover
 	text-align:left;
 	
 }
+
+.error
+{
+	color:red;
+}
 div#login
 {
 	color:white;
