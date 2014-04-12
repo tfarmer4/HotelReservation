@@ -49,9 +49,9 @@ $active_group = 'default';
 $active_record = TRUE;
 
 $db['default']['hostname'] = 'student-db';
-$db['default']['username'] = 'tlf0096';
-$db['default']['password'] = 'Bl@ckD0g0513';
-$db['default']['database'] = 'tlf0096';
+$db['default']['username'] = 'ana0119';
+$db['default']['password'] = 'Otaian%%';
+$db['default']['database'] = 'ana0119';
 $db['default']['dbdriver'] = 'mysql';
 $db['default']['dbprefix'] = '';
 $db['default']['pconnect'] = TRUE;
