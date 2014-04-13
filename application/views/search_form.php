@@ -34,16 +34,17 @@
 	<script src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
 	<script>   
     $(function() {
-         $( "#datepicker" ).datepicker();   
+         $( "#datepickerIn" ).datepicker();   
+	 $( "#datepickerOut").datepicker();
     }); 
 	</script>
 	<label for="hotel-checkin" class="calendar-input">
 	Check-In
-	<input name="checkInDate" preformat="" type="text" id="datepicker" placeholder="Choose Date" autocomplete="off" >
+	<input name="checkInDate" preformat="" type="text" id="datepickerIn" placeholder="Choose Date" autocomplete="off" >
 	</label>	
 	<label for="hotel-checkout" class="calendar-input margin-change">
 	Check-Out
-	<input name="checkOutDate" preformat="" type="text" id="datepicker" placeholder="Choose Date" autocomplete="off" >	
+	<input name="checkOutDate" preformat="" type="text" id="datepickerOut" placeholder="Choose Date" autocomplete="off" >	
 	</label>
 	
 			
