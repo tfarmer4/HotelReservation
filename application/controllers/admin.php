@@ -23,15 +23,12 @@ class Admin extends CI_Controller {
 		$this->load->helper('form');
 		//$this->load->helper('general_helper');
 		
-		// load models
-		$this->load->model("admin_main_mdl");
-		
 		$this->load->view("header");
 	}
 	
 	public function index() {
 		if($this->session->userdata('loggedIn')=='TRUE' && $this->session->userdata('admin') == 1) {
-			redirect("admin_home");
+			redirect("hotels");
 		} else {
 			// load views
 			$this->load->view('admin');
