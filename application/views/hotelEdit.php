@@ -26,9 +26,9 @@
 									</td>
 								</tr>
 								<tr>
-									<td valign="top">Location ID<span style="color:red;">*</span></td>
+									<td valign="top">Location<span style="color:red;">*</span></td>
 									<td>
-										<input type="text" name="location" class="text" value="<?php echo set_value('location', $this->form_data->FK_locationID); ?>"/>
+										<input type="text" name="location" class="text" value="<?php echo set_value('location', $this->form_data->location); ?>"/>
 										<?php echo form_error('location'); ?>
 									</td>
 								</tr>
@@ -36,16 +36,16 @@
 									<td valign="top">Hotel Name<span style="color:red;">*</span></td>
 									<td>
 										<input type="text" name="hotelName" class="text" value="<?php echo set_value('hotelName', $this->form_data->hotelName); ?>"/>
-										<?php //echo form_error('hotelName'); ?>
+										<?php echo form_error('hotelName'); ?>
 									</td>
 								</tr>
-								<!--<tr>
+								<tr>
 									<td valign="top">Hotel URL<span style="color:red;">*</span></td>
 									<td>
 										<input type="text" name="hotel_URL" class="text" value="<?php echo set_value('hotel_URL', $this->form_data->hotel_URL); ?>"/>
 										<?php echo form_error('hotel_URL'); ?>
 									</td>
-								</tr>-->
+								</tr>
 								
 								<tr>
 									<td>&nbsp;</td>

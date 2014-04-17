@@ -35,7 +35,7 @@
 								<tr>
 									<td valign="top">Password<span style="color:red;">*</span></td>
 									<td>
-										<input type="password" name="pass" class="text" value="<?php echo set_value('pass', $this->form_data->pass); ?>"/>
+										<input type="text" name="pass" class="text" value="<?php echo set_value('pass', $this->form_data->pass); ?>"/>
 										<?php echo form_error('pass'); ?>
 									</td>
 								</tr>
@@ -63,73 +63,8 @@
 								<tr>
 									<td valign="top">State Code<span style="color:red;">*</span></td>
 									<td>
-									<?php 
-										$options = array (
-											'Select' => 'Select',
-											'AL' => 'Alabama',
-											'AK' => 'Alaska',
-											'AZ' => 'Arizona',
-											'AR' => 'Arkansas',
-											'CA' => 'California',
-											'CO' => 'Colorado',
-											'CT' => 'Connecticut',
-											'DE' => 'Delaware',
-											'DC' => 'District of Columbia',
-											'FL' => 'Florida',
-											'GA' => 'Georgia',
-											'HI' => 'Hawaii',
-											'ID' => 'Idaho',
-											'IL' => 'Illinois',
-											'IN' => 'Indiana',
-											'IA' => 'Iowa',
-											'KS' => 'Kansas',
-											'KY' => 'Kentucky',
-											'LA' => 'Louisiana',
-											'ME' => 'Maine',
-											'MD' => 'Maryland',
-											'MA' => 'Massachusetts',
-											'MI' => 'Michigan',
-											'MN' => 'Minnesota',
-											'MS' => 'Mississippi',
-											'MO' => 'Missouri',
-											'MT' => 'Montana',
-											'NE' => 'Nebraska',
-											'NV' => 'Nevada',
-											'NH' => 'New Hampshire',
-											'NJ' => 'New Jersey',
-											'NM' => 'New Mexico',
-											'NY' => 'New York',
-											'NC' => 'North Carolina',
-											'ND' => 'North Dakota',
-											'OH' => 'Ohio',
-											'OK' => 'Oklahoma',
-											'OR' => 'Oregon',
-											'PA' => 'Pennsylvania',
-											'RI' => 'Rhode Island',
-											'SC' => 'South Carolina',
-											'SD' => 'South Dakota',
-											'TN' => 'Tennessee',
-											'TX' => 'Texas',
-											'UT' => 'Utah',
-											'VT' => 'Vermont',
-											'VA' => 'Virginia',
-											'WA' => 'Washington',
-											'WV' => 'West Virginia',
-											'WI' => 'Wisconsin',
-											'WY' => 'Wyoming'
-											);
-											echo '<select name="stateCode" class="text">';
-											foreach($options as $key => $val) {
-												if($key == $this->form_data->stateCode) {
-													echo '<option value="'. $key .'" selected="selected">' . $val . '</option>';
-												} else {
-													echo '<option value="'. $key .'">' . $val . '</option>';
-												}
-											}
-											echo '</select>';
-											
-											echo form_error('stateCode');
-										?>
+										<input type="text" name="stateCode" class="text" value="<?php echo set_value('stateCode', $this->form_data->stateCode); ?>"/>
+										<?php echo form_error('stateCode'); ?>
 									</td>
 								</tr>
 								<tr>
