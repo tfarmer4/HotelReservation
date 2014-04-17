@@ -27,7 +27,7 @@ class Admin extends CI_Controller {
 	}
 	
 	public function index() {
-		if($this->session->userdata('loggedIn')=='TRUE' && $this->session->userdata('admin') == 1) {
+		if($this->session->userdata('loggedIn')=='TRUE' && $this->session->userdata('admin') == 'TRUE') {
 			redirect("hotels");
 		} else {
 			// load views
