@@ -21,6 +21,10 @@ class Reservations extends CI_Controller {
 		$this->load->model('Reservations_mdl','',TRUE);
 		$this->load->model('Guests_mdl','',TRUE);
 		$this->load->model('Users_mdl','',TRUE);
+		if(!$this->session->userdata('admin') == 'TRUE') {
+		
+			redirect('admin');
+		}
 	}
 	
 	function index($offset = 0)

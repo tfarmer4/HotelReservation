@@ -19,6 +19,10 @@ class Users extends CI_Controller {
 		
 		// load model
 		$this->load->model('Users_mdl','',TRUE);
+		if(!$this->session->userdata('admin') == 'TRUE') {
+		
+			redirect('admin');
+		}
 	}
 	
 	function index($offset = 0)
