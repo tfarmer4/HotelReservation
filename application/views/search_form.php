@@ -1,5 +1,5 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <title>Search for Hotels in Texas</title>
@@ -48,16 +48,17 @@
 	</label>
 	
 			
-	<label for="hotel-rooms" class="select"> 
-	<span class="select-placeholder">Select Room Quantity</span>
-	<select id="hotel-rooms" name="numberOfRooms">
-		<option value="1">1 Room</option>
-		<option value="2">2 Rooms</option>
-		<option value="3">3 Rooms</option>
-		<option value="4">4 Rooms</option>
-		<option value="5">5+ Rooms</option>
-	</select>
-	</label>						
+	<label for="hotel-rooms" class="select"> 	
+	<span class="select-placeholder">Select Room Quantity</span>	
+	<select id="hotel-rooms" name="numberOfRooms">		
+		<option value="1">1 Room</option>			
+		<option value="2">2 Rooms</option>			
+		<option value="3">3 Rooms</option>		
+		<option value="4">4 Rooms</option>		
+		<option value="5">5+ Rooms</option>	
+	</select>	
+	</label>	
+	<form nethod="get" action="hotel_search">
 	<button id="hotel-btn-submit-retl" class="button primary large" type="submit" value="retl" >Search Hotels</button>
 	</form></div> 
 
