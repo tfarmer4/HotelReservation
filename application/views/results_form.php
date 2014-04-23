@@ -18,9 +18,13 @@
 	<h1> Select A Room </h1>
 	<h3 style="color: red;"> <?php echo $hotelName. "<br />"; ?> </h3>
 	<img src="../images/PRICE-LINK.jpg"/><p></P>
-		 <?php echo $address."<br />"; ?>
-		 <?php echo $city.", ".$stateCode." ".$zip."<br />"; ?>
-	<a href="http://<?php echo $hotel_URL;?>"> Visit our site! </a>			
+		<h5>
+			<?php echo $address; ?><br>
+			<?php echo $city.", ".$stateCode." ".$zip; ?><br>
+			Date In: <?php echo $dateIn; ?><br>
+			Date Out: <?php echo $dateOut; ?><br>
+			<a href="http://<?php echo $hotel_URL;?>"> Visit our site! </a>		
+		</h5>		
 	
 	</div>	
 	</body>

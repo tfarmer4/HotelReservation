@@ -18,17 +18,17 @@
 
 			
 	<h1>Search for Hotels in Texas</h1>
-			
+	<form nethod="get" action="hotel_search">		
 	<label for="hotel-dest" class="select">
 	<span class="select-placeholder">Select City</span>
-	<select placeholder="Select City" id="hotel-dest" name="cityname">
-		<option value="1">Dallas</option>
-		<option value="2">San Antonio</option>
-		<option value="3">Houston</option>
-		<option value="4">Austin</option>
-		<option value="5">El Paso</option>
-		<option value="6">Corpus Christi</option>
-	</select>						
+	City: <select placeholder="Select City" id="hotel-dest" name="cityname">
+			<option value="1">Dallas</option>
+			<option value="2">San Antonio</option>
+			<option value="3">Houston</option>
+			<option value="4">Austin</option>
+			<option value="5">El Paso</option>
+			<option value="6">Corpus Christi</option>
+		  </select>						
 	</label>
 
 	<script src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
@@ -40,11 +40,11 @@
 	</script>
 	<label for="hotel-checkin" class="calendar-input">
 	Check-In
-	<input name="checkInDate" preformat="" type="text" id="datepickerIn" placeholder="Choose Date" autocomplete="off" >
+	DateIn: <input name="checkInDate" preformat="" type="text" id="datepickerIn" placeholder="Choose Date" autocomplete="off" >
 	</label>	
 	<label for="hotel-checkout" class="calendar-input margin-change">
 	Check-Out
-	<input name="checkOutDate" preformat="" type="text" id="datepickerOut" placeholder="Choose Date" autocomplete="off" >	
+	DateOut: <input name="checkOutDate" preformat="" type="text" id="datepickerOut" placeholder="Choose Date" autocomplete="off" >	
 	</label>
 	
 			
@@ -58,7 +58,6 @@
 		<option value="5">5+ Rooms</option>	
 	</select>	
 	</label>	
-	<form nethod="get" action="hotel_search">
 	<button id="hotel-btn-submit-retl" class="button primary large" type="submit" value="retl" >Search Hotels</button>
 	</form></div> 
 

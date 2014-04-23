@@ -18,8 +18,19 @@ class Hotel_search extends CI_Controller{
 		
 			$this->load->view('header');	
 			
-			$hotel = $this->db_model->get_hotels();
+			//get passed values
+			$cityName = $_GET["cityname"];
+			$data['dateIn'] = $_GET["checkInDate"];
+			$data['dateOut'] = $_GET["checkOutDate"];
+			
 			$location = $this->db_model->get_locations();
+			//$locID = $location['locationID'];
+			$data['locationID'] = $location['locationID'];
+			
+			$data['cityName'] = $cityName['cityname'];			
+			
+			$hotel = $this->db_model->get_hotels();
+			
 			$roomType = $this->db_model->get_RoomTypes();
 			$rooms = $this->db_model->get_rooms();
 			
