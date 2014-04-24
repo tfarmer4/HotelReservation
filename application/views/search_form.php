@@ -22,12 +22,12 @@
 	<label for="hotel-dest" class="select">
 	<span class="select-placeholder">Select City</span>
 	City: <select placeholder="Select City" id="hotel-dest" name="cityname">
-			<option value="1">Dallas</option>
-			<option value="2">San Antonio</option>
-			<option value="3">Houston</option>
-			<option value="4">Austin</option>
-			<option value="5">El Paso</option>
-			<option value="6">Corpus Christi</option>
+			<option value="Dallas">Dallas</option>
+			<option value="San Antonio">San Antonio</option>
+			<option value="Houston">Houston</option>
+			<option value="Austin">Austin</option>
+			<option value="El Paso">El Paso</option>
+			<option value="Corpus Christi">Corpus Christi</option>
 		  </select>						
 	</label>
 

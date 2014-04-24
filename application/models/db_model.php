@@ -1,4 +1,7 @@
 <?php class Db_Model extends CI_Model{
+
+	private $name='Hotels';
+	
 	public function __construct()
 	{		
 		$this->load->database();
@@ -8,6 +11,15 @@
 	{
 			$query = $this->db->query('SELECT * FROM `Hotels`');
 			return $query->row_array();
+	}
+	
+	function get_by_name($cityName){
+		$this
+			->db
+			->select($this->name . ".*, Location.*")
+			->join("Location", $this->name . ".FK_locationID=Location.locationID", "left")
+			->where('city', $cityName);
+		return $this->db->get($this->name);
 	}
 	
 	public function get_rooms()
