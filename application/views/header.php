@@ -68,7 +68,6 @@ $(document).ready(function(){
 
     <ul id="nav">
         <li><a href="<?php echo site_url();?>/home">Home</a></li>
-        <li><a href="<?php echo site_url();?>/reservations">My Reservation</a></li>
         <li><a href="<?php echo site_url();?>/about">About Us</a></li>
         <?php if($this->session->userdata('admin')=='TRUE'):?>
         <li><a href="<?php echo site_url();?>/hotels">Admin</a></li>
